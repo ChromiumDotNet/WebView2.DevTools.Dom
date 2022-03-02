@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<RuntimeIdentifier>$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifier>
+		<SelfContained Condition="'$(SelfContained)' == ''">false</SelfContained>
+		<IsTestProject>true</IsTestProject>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<AssemblyName>WebView2.DevTools.Dom.Tests</AssemblyName>
+		<UseWindowsForms>true</UseWindowsForms>
+		<LangVersion>Latest</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.1" />
+		<PackageReference Include="MarkdownSnippets.MsBuild" Version="23.1.1" PrivateAssets="All" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="WebView2.DevTools.Dom" Version="1.0.0" />
+		<PackageReference Include="xunit" Version="2.4.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1083-prerelease" />
+		<PackageReference Include="Xunit.StaFact" Version="1.1.5-alpha" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Assets\es6\es6import.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6module.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6pathimport.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\file-to-upload.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedfile.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedstyle.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="test.runsettings">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="xunit.runner.json" />
+		<Content Include="xunit.runner.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>
