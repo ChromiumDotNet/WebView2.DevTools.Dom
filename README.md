@@ -26,6 +26,15 @@ Sponsors can:
 
 # Usage
 
+## WebView2DevToolsContext
+
+The **WebView2DevToolsContext** class is the main entry point into the library and can be created from a
+[CoreWebView2](https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2) instance.
+
+```c#
+var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
+```
+
 ## DOM Access
 
 Read/write to the DOM
