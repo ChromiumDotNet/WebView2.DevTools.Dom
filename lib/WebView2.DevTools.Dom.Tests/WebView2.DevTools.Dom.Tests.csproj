@@ -15,12 +15,12 @@
 		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.1" />
 		<PackageReference Include="MarkdownSnippets.MsBuild" Version="23.1.1" PrivateAssets="All" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="WebView2.DevTools.Dom" Version="1.0.0" />
+    <PackageReference Include="WebView2.DevTools.Dom" Version="1.0.1" />
 		<PackageReference Include="xunit" Version="2.4.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1083-prerelease" />
-		<PackageReference Include="Xunit.StaFact" Version="1.1.5-alpha" />
+		<PackageReference Include="Xunit.StaFact" Version="1.1.11" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="Assets\es6\es6import.js">
