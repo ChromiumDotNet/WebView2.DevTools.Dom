@@ -44,6 +44,17 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
                     //Get all child elements
                     var childElements = await element.QuerySelectorAllAsync("div");
 
+                    //Change CSS style background colour
+                    _ = await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
+
+                    //Type text in an input field
+                    await element.TypeAsync("Welcome to my Website!");
+
+                    //Scroll Element into View (if needed)
+                    //Can optional specify a Rect to be scrolled into view, relative to the node's border box,
+                    //in CSS pixels. When omitted, center of the node will be used
+                    await element.ScrollIntoViewIfNeededAsync();
+
                     //Click The element
                     await element.ClickAsync();
 
@@ -51,7 +62,12 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 
                     foreach (var div in divElements)
                     {
-                        var style = await div.GetAttributeValueAsync<string>("style");
+                        // Get a reference to the CSSStyleDeclaration
+                        var style = await div.GetStyleAsync();
+
+                        //Set the border to 1px solid red
+                        await style.SetPropertyAsync("border", "1px solid red", important: true);
+
                         await div.SetAttributeValueAsync("data-customAttribute", "123");
                         await div.SetPropertyValueAsync("innerText", "Updated Div innerText");
                     }

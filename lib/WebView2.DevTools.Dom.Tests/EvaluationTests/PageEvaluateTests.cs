@@ -260,7 +260,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             await element.DisposeAsync();
             var exception = await Assert.ThrowsAsync<WebView2DevToolsContextException>(()
                 => DevToolsContext.EvaluateFunctionAsync<string>("e => e.textContent", element));
-            Assert.Contains("JavascriptHandle is disposed", exception.Message);
+            Assert.Contains("HtmlElement is disposed", exception.Message);
         }
 
         [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
