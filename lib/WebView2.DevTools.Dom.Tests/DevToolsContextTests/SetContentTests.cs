@@ -20,6 +20,9 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
 #pragma warning restore IDE0051 // Remove unused private members
         {
             #region SetContentAsync
+            // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
+            // via await using or await devToolsContext.DisposeAsync();
+            // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
             await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
             await devtoolsContext.SetContentAsync("<div>My Receipt</div>");
             var result = await devtoolsContext.GetContentAsync();

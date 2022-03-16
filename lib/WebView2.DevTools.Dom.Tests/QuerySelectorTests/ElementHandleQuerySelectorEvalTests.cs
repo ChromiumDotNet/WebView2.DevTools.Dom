@@ -20,7 +20,10 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 
             await webView2Browser.EnsureCoreWebView2Async();
 
-            using var devToolsContext = await webView2Browser.CoreWebView2.CreateDevToolsContextAsync();
+            // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
+            // via await using or await devToolsContext.DisposeAsync();
+            // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
+            await using var devToolsContext = await webView2Browser.CoreWebView2.CreateDevToolsContextAsync();
             await devToolsContext.IgnoreCertificateErrorsAsync(true);
             var seven = await devToolsContext.EvaluateExpressionAsync<int>("4 + 3");
             var someObject = await devToolsContext.EvaluateFunctionAsync<dynamic>("(value) => ({a: value})", 5);

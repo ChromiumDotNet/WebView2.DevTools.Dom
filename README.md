@@ -66,6 +66,17 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
         //Get all child elements
         var childElements = await element.QuerySelectorAllAsync("div");
 
+        //Change CSS style background colour
+        _ = await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
+
+        //Type text in an input field
+        await element.TypeAsync("Welcome to my Website!");
+
+        //Scroll Element into View (if needed)
+        //Can optional specify a Rect to be scrolled into view, relative to the node's border box,
+        //in CSS pixels. When omitted, center of the node will be used
+        await element.ScrollIntoViewIfNeededAsync();
+
         //Click The element
         await element.ClickAsync();
 
@@ -73,25 +84,33 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 
         foreach (var div in divElements)
         {
-            var style = await div.GetAttributeValueAsync<string>("style");
+            // Get a reference to the CSSStyleDeclaration
+            var style = await div.GetStyleAsync();
+
+            //Set the border to 1px solid red
+            await style.SetPropertyAsync("border", "1px solid red", important: true);
+
             await div.SetAttributeValueAsync("data-customAttribute", "123");
             await div.SetPropertyValueAsync("innerText", "Updated Div innerText");
         }
     }
 };
 ```
-<sup><a href='/lib/WebView2.DevTools.Dom.Tests/QuerySelectorTests/PageQuerySelectorTests.cs#L20-L61' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/lib/WebView2.DevTools.Dom.Tests/QuerySelectorTests/PageQuerySelectorTests.cs#L20-L77' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML
 <!-- snippet: SetContentAsync -->
 <a id='snippet-setcontentasync'></a>
 ```cs
+// WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
+// via await using or await devToolsContext.DisposeAsync();
+// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
 await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 await devtoolsContext.SetContentAsync("<div>My Receipt</div>");
 var result = await devtoolsContext.GetContentAsync();
 ```
-<sup><a href='/lib/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L27' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/lib/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Evaluate Javascript
@@ -101,13 +120,16 @@ var result = await devtoolsContext.GetContentAsync();
 ```cs
 await webView2Browser.EnsureCoreWebView2Async();
 
-using var devToolsContext = await webView2Browser.CoreWebView2.CreateDevToolsContextAsync();
+// WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
+// via await using or await devToolsContext.DisposeAsync();
+// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
+await using var devToolsContext = await webView2Browser.CoreWebView2.CreateDevToolsContextAsync();
 await devToolsContext.IgnoreCertificateErrorsAsync(true);
 var seven = await devToolsContext.EvaluateExpressionAsync<int>("4 + 3");
 var someObject = await devToolsContext.EvaluateFunctionAsync<dynamic>("(value) => ({a: value})", 5);
 System.Console.WriteLine(someObject.a);
 ```
-<sup><a href='/lib/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L19-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/lib/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L19-L31' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## NOT YET SUPPORTED
