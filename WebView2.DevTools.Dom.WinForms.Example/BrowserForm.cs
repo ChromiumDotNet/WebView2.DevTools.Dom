@@ -165,14 +165,16 @@ namespace WebView2.DevTools.Dom.WinForms.Example
 
         private async void HighlightLinksToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var devToolcContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
+            var devToolsContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
 
-            var links = await devToolcContext.QuerySelectorAllAsync("a");
+            var links = await devToolsContext.QuerySelectorAllAsync("a");
 
             foreach (var link in links)
             {
                 _ = await link.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
             }
+
+            await devToolsContext.DisposeAsync();
         }
 
         private void InvokeOnUiThreadIfRequired(Action action)
@@ -197,13 +199,15 @@ namespace WebView2.DevTools.Dom.WinForms.Example
 
         private async void ScrollLastElementIntoViewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var devToolcContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
+            var devToolsContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
 
-            var body = await devToolcContext.QuerySelectorAsync("body");
+            var body = await devToolsContext.QuerySelectorAsync("body");
 
             var lastElement = await body.EvaluateFunctionHandleAsync<HtmlElement>("e => e.lastElementChild");
 
             await lastElement.ScrollIntoViewIfNeededAsync();
+
+            await devToolsContext.DisposeAsync();
         }
     }
 }
