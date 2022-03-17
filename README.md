@@ -30,9 +30,20 @@ Sponsors can:
 
 The **WebView2DevToolsContext** class is the main entry point into the library and can be created from a
 [CoreWebView2](https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2) instance.
+Only a **single** WebView2DevToolsContext should exist at any given time, when you are finished them make sure you
+dispose via DisposeAsync.
 
 ```c#
 var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
+
+// Manually dispose of context (only DisposeAsync is supported as the whole API is async)
+await devToolsContext.DisposeAsync();
+```
+
+```c#
+// Dispose automatically via await using
+// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
+await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 ```
 
 ## DOM Access
@@ -48,6 +59,13 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 {
     if(args.IsSuccess)
     {
+        // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
+        // via await using or await devToolsContext.DisposeAsync();
+        // Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed
+        // When you have finished. Only create a single instance at a time, reuse an instance rather than
+        // creaeting a new WebView2DevToolsContext. Dispose the old WebView2DevToolsContext instance before
+        // creating a new instance if you need to manage the lifespan manually.
+        // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
         await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 
         // Get element by Id
@@ -96,7 +114,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
     }
 };
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/PageQuerySelectorTests.cs#L20-L77' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/PageQuerySelectorTests.cs#L20-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML
@@ -105,12 +123,16 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 ```cs
 // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
 // via await using or await devToolsContext.DisposeAsync();
+// Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed
+// When you have finished. Only create a single instance at a time, reuse an instance rather than
+// creaeting a new WebView2DevToolsContext. Dispose the old WebView2DevToolsContext instance before
+// creating a new instance if you need to manage the lifespan manually.
 // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
 await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 await devtoolsContext.SetContentAsync("<div>My Receipt</div>");
 var result = await devtoolsContext.GetContentAsync();
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Evaluate Javascript

@@ -22,6 +22,10 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             #region SetContentAsync
             // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
             // via await using or await devToolsContext.DisposeAsync();
+            // Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed
+            // When you have finished. Only create a single instance at a time, reuse an instance rather than
+            // creaeting a new WebView2DevToolsContext. Dispose the old WebView2DevToolsContext instance before
+            // creating a new instance if you need to manage the lifespan manually.
             // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
             await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
             await devtoolsContext.SetContentAsync("<div>My Receipt</div>");
