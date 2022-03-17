@@ -1,10 +1,10 @@
 # WebView2 DevTools DOM
 
 WebView2 DevTools Dom is a port of [puppeteer-sharp by Darío Kondratiuk](https://github.com/hardkoded/puppeteer-sharp) that has been adapted specifically for use with WebView2.
-Direct communication with the CoreWebView2 via the DevTools protocol.
-1:1 mapping of WebView2DevToolsContext and CoreWebView2
-The primary focus of this project is DOM access/manipulation and Javascript execution/evaluation. Only a subset of the Puppeteer Sharp features
-were ported. It maybe possible to port additional features if sufficent user demand.
+- Direct communication with the CoreWebView2 via the DevTools protocol (no need to open a Remote Debugging Port).
+- 1:1 mapping of WebView2DevToolsContext and CoreWebView2 (create a single WebView2DevToolsContext per CoreWebView2 instance)
+- The primary focus of this project is DOM access/manipulation and Javascript execution/evaluation.
+- Only a subset of the Puppeteer Sharp features were ported (It maybe possible to port additional features if sufficent user demand).
 
 # Sponsorware
 
