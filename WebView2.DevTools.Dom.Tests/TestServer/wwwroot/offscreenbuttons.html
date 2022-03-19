@@ -74,6 +74,6 @@
 <button id=btn10>10</button>
 <script>for (const button of document.querySelectorAll('button')) {
         button.addEventListener('click', () => {
-            console.log(`button #${button.textContent} clicked`);
+            window.chrome.webview.postMessage(`button #${button.textContent} clicked`);
         });
     }</script>

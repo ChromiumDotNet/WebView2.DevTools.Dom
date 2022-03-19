@@ -90,20 +90,25 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
         [WebView2ContextFact]
         public async Task ShouldSelectTheTextByTripleClicking()
         {
+            const string expected = "This is the text that we are going to try to select. Let's see how it goes.";
+
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
             await DevToolsContext.FocusAsync("textarea");
-            const string text = "This is the text that we are going to try to select. Let's see how it goes.";
-            await DevToolsContext.Keyboard.TypeAsync(text);
+            
+            await DevToolsContext.Keyboard.TypeAsync(expected);
             await DevToolsContext.ClickAsync("textarea");
             await DevToolsContext.ClickAsync("textarea", new ClickOptions { ClickCount = 2 });
             await DevToolsContext.ClickAsync("textarea", new ClickOptions { ClickCount = 3 });
-            Assert.Equal(text, await DevToolsContext.EvaluateFunctionAsync<string>(@"() => {
+
+            var actual = await DevToolsContext.EvaluateFunctionAsync<string>(@"() => {
                 const textarea = document.querySelector('textarea');
                 return textarea.value.substring(
                     textarea.selectionStart,
                     textarea.selectionEnd
                 );
-            }"));
+            }");
+
+            Assert.Equal(expected, actual);
         }
 
         [WebView2ContextFact]
@@ -112,12 +117,18 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/offscreenbuttons.html");
             var messages = new List<string>();
 
+            WebView.CoreWebView2.WebMessageReceived += (_, args) => messages.Add(args.TryGetWebMessageAsString());
+
             for (var i = 0; i < 11; ++i)
             {
                 // We might've scrolled to click a button - reset to (0, 0).
                 await DevToolsContext.EvaluateFunctionAsync("() => window.scrollTo(0, 0)");
                 await DevToolsContext.ClickAsync($"#btn{i}");
             }
+
+            //Little dely to ensure messages from window.chrome.webview.postMessage have been processed.
+            await Task.Delay(100);
+
             Assert.Equal(new List<string>
             {
                 "button #0 clicked",
