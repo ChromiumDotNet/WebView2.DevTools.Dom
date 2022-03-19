@@ -1,22 +1,11 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 
 namespace WebView2.DevTools.Dom.Tests
 {
     public static class TestUtils
     {
-        public static string FindParentDirectory(string directory)
-        {
-            var current = Directory.GetCurrentDirectory();
-            while (!Directory.Exists(Path.Combine(current, directory)))
-            {
-                current = Directory.GetParent(current).FullName;
-            }
-            return Path.Combine(current, directory);
-        }
-
         /// <summary>
         /// Removes as much whitespace as possible from a given string. Whitespace
         /// that separates letters and/or digits is collapsed to a space character.
