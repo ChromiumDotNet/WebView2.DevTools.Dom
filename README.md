@@ -4,13 +4,13 @@ WebView2 DevTools Dom is a port of [puppeteer-sharp by Darío Kondratiuk](https:
 - Direct communication with the CoreWebView2 via the DevTools protocol (no need to open a Remote Debugging Port).
 - 1:1 mapping of WebView2DevToolsContext and CoreWebView2 (create a single WebView2DevToolsContext per CoreWebView2 instance)
 - The primary focus of this project is DOM access/manipulation and Javascript execution/evaluation.
-- Only a subset of the Puppeteer Sharp features were ported (It maybe possible to port additional features if sufficent user demand).
+- Only a **subset** of the Puppeteer Sharp features were ported (It maybe possible to port additional features if sufficent user demand).
 
 # Sponsorware
 
 This project has adopted a variant of the [Sponsorware](https://github.com/sponsorware/docs) open source model. To ensure the project maintainer/developer ([@amaitland](https://github.com/amaitland))
-can support the project the source will be released under an MIT license when the target of 45 sponsors via [GitHub Sponsors](https://github.com/sponsors/amaitland/)
-is reached. Sponsors will get **priority support**. Everyone is free to download and use the Nuget package.
+can support the project the source will be released under an MIT license when the target of 25 sponsors signup to the [WebView2 DevTools Dom Supporter](https://github.com/sponsors/amaitland/)
+tier here on GitHub. Sponsors will get **priority support**. **Everyone** is free to download and use the Nuget package.
 
 # Prerequisites
 
