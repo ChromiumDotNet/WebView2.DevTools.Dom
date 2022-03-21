@@ -10,7 +10,9 @@ WebView2 DevTools Dom is a port of [puppeteer-sharp by Darío Kondratiuk](https:
 
 This project has adopted a variant of the [Sponsorware](https://github.com/sponsorware/docs) open source model. To ensure the project maintainer/developer ([@amaitland](https://github.com/amaitland))
 can support the project the source will be released under an MIT license when the target of 25 sponsors signup to the [WebView2 DevTools Dom Supporter](https://github.com/sponsors/amaitland/)
-tier here on GitHub. Sponsors will get **priority support**. **Everyone** is free to download and use the Nuget package.
+tier here on GitHub. Sponsors will get **priority support** and automatically gain access to the project source. **Everyone** is free to download and use the Nuget package.
+
+The xUnit tests are avaliable as part of this repository. 
 
 # Prerequisites
 
@@ -21,8 +23,8 @@ tier here on GitHub. Sponsors will get **priority support**. **Everyone** is fre
 
 Sponsors can:
 
-* Ask a question on [Discussions](https://github.com/amaitland/WebView2.DevTools.Dom/discussions).
-* File bug reports on [Issues](https://github.com/amaitland/WebView2.DevTools.Dom/issues).
+* Ask a question on [Discussions](https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/discussions).
+* File bug reports on [Issues](https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/issues).
 
 # Usage
 
