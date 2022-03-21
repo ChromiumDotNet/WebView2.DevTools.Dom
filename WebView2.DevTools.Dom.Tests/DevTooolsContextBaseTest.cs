@@ -39,12 +39,17 @@ namespace WebView2.DevTools.Dom.Tests
 
         public async Task InitializeAsync()
         {
-            WebView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            WebView = new Microsoft.Web.WebView2.WinForms.WebView2
+            {
+                Dock = DockStyle.Fill
+            };
 
             _form = new Form
             {
                 WindowState = FormWindowState.Normal,
-                Text = "WebView2 DevTools Context Test"
+                Text = "WebView2 DevTools Context Test",
+                // Puppeteer default size is 800,600
+                Size = new System.Drawing.Size(800, 600)
             };
 
             _form.Controls.Add(WebView);

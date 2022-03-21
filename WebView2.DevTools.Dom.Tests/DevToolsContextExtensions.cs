@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using Microsoft.Web.WebView2.Core;
 
 namespace WebView2.DevTools.Dom.Tests
@@ -16,12 +15,18 @@ namespace WebView2.DevTools.Dom.Tests
 
             EventHandler<CoreWebView2NavigationCompletedEventArgs> evt = null;
 
-            evt = (s, args) =>
+            evt = async (s, args) =>
             {
                 coreWebView2.NavigationCompleted -= evt;
 
                 if(args.IsSuccess)
-                {
+{
+                    // NavigationComplete is called before the page has finished rendering for cases like
+                    // our very simple test pages.
+                    // Mouse and Keyboard tests require the page to actually finish rendering, so we add a delay here
+                    // So WebView2 has time to render. 
+                    await Task.Delay(500);
+
                     tcs.TrySetResult(true);
                 }
                 else
