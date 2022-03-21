@@ -20,6 +20,9 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
 #pragma warning restore IDE0051 // Remove unused private members
         {
             #region SetContentAsync
+            // Add using WebView2.DevTools.Dom; to get access to the
+            // CreateDevToolsContextAsync extension method
+
             // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
             // via await using or await devToolsContext.DisposeAsync();
             // Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed

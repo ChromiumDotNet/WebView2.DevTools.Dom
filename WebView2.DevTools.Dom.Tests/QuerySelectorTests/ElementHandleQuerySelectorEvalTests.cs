@@ -16,6 +16,9 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         {
             #region Evaluate
 
+            // Add using WebView2.DevTools.Dom; to get access to the
+            // CreateDevToolsContextAsync extension method
+
             await webView2Browser.EnsureCoreWebView2Async();
 
             // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed

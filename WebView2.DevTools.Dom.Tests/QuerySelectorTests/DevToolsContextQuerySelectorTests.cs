@@ -19,7 +19,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         {
             #region QuerySelector
 
-            // Add using WebView2.DevTools.Dom to get access to the
+            // Add using WebView2.DevTools.Dom; to get access to the
             // CreateDevToolsContextAsync extension method
 
             coreWebView2.NavigationCompleted += async (sender, args) =>

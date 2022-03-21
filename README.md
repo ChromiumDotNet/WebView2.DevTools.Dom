@@ -36,6 +36,8 @@ Only a **single** WebView2DevToolsContext should exist at any given time, when y
 dispose via DisposeAsync.
 
 ```c#
+// Add using WebView2.DevTools.Dom; to get access to the
+// CreateDevToolsContextAsync extension method
 var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 
 // Manually dispose of context (only DisposeAsync is supported as the whole API is async)
@@ -54,7 +56,7 @@ Read/write to the DOM
 <!-- snippet: QuerySelector -->
 <a id='snippet-queryselector'></a>
 ```cs
-// Add using WebView2.DevTools.Dom to get access to the
+// Add using WebView2.DevTools.Dom; to get access to the
 // CreateDevToolsContextAsync extension method
 
 coreWebView2.NavigationCompleted += async (sender, args) =>
@@ -123,6 +125,9 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 <!-- snippet: SetContentAsync -->
 <a id='snippet-setcontentasync'></a>
 ```cs
+// Add using WebView2.DevTools.Dom; to get access to the
+// CreateDevToolsContextAsync extension method
+
 // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
 // via await using or await devToolsContext.DisposeAsync();
 // Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed
@@ -134,7 +139,7 @@ await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync(
 await devtoolsContext.SetContentAsync("<div>My Receipt</div>");
 var result = await devtoolsContext.GetContentAsync();
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/DevToolsContextTests/SetContentTests.cs#L22-L37' title='Snippet source file'>snippet source</a> | <a href='#snippet-setcontentasync' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Evaluate Javascript
@@ -142,6 +147,9 @@ var result = await devtoolsContext.GetContentAsync();
 <!-- snippet: Evaluate -->
 <a id='snippet-evaluate'></a>
 ```cs
+// Add using WebView2.DevTools.Dom; to get access to the
+// CreateDevToolsContextAsync extension method
+
 await webView2Browser.EnsureCoreWebView2Async();
 
 // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
@@ -156,7 +164,7 @@ var fourtyTwo = await devToolsContext.EvaluateFunctionAsync<int>("() => Promise.
 var someObject = await devToolsContext.EvaluateFunctionAsync<dynamic>("(value) => ({a: value})", 5);
 System.Console.WriteLine(someObject.a);
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L17-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L17-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## NOT YET SUPPORTED
