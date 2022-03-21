@@ -10,7 +10,7 @@
 	<ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />
 		<PackageReference Include="NodaTime" Version="3.0.9" />
-    <PackageReference Include="WebView2.DevTools.Dom" Version="1.0.4" />
+    <PackageReference Include="WebView2.DevTools.Dom" Version="1.0.5" />
 	</ItemGroup>
 
 </Project>
