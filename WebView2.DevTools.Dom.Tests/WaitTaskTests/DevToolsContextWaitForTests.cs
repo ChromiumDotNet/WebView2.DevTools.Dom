@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.WaitForTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageWaitForTests : DevTooolsContextBaseTest
+    public class DevToolsContextWaitForTests : DevTooolsContextBaseTest
     {
-        public PageWaitForTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextWaitForTests(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -44,7 +44,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitForTests
         public async Task ShouldNotAllowYouToSelectAnElementWithSingleSlashXpath()
         {
             await DevToolsContext.SetContentAsync("<div>some text</div>");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
                 DevToolsContext.WaitForSelectorAsync("/html/body/div"));
             Assert.NotNull(exception);
         }

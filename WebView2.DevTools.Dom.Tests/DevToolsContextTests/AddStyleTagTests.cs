@@ -78,7 +78,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldThrowWhenAddedWithContentToTheCSPPage()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/csp.html");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(
                 () => DevToolsContext.AddStyleTagAsync(new AddTagOptions
                 {
                     Content = "body { background-color: green; }"

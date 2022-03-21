@@ -1,6 +1,4 @@
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
-using Microsoft.Web.WebView2.WinForms;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;
@@ -58,7 +56,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
             var htmlContent = "<div class=\"a\">not-a-child-div</div><div id=\"myId\"></div>";
             await DevToolsContext.SetContentAsync(htmlContent);
             var elementHandle = await DevToolsContext.QuerySelectorAsync("#myId");
-            var exception = await Assert.ThrowsAsync<SelectorException>(
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsSelectorException>(
                 () => elementHandle.QuerySelectorAsync(".a").EvaluateFunctionAsync<string>("node => node.innerText")
             );
             Assert.Equal("Error: failed to find element matching selector", exception.Message);

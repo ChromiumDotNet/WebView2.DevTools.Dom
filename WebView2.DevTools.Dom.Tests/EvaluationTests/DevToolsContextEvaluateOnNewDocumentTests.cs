@@ -7,9 +7,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.EvaluationTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageEvaluateOnNewDocumentTests : DevTooolsContextBaseTest
+    public class DevToolsContextEvaluateOnNewDocumentTests : DevTooolsContextBaseTest
     {
-        public PageEvaluateOnNewDocumentTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextEvaluateOnNewDocumentTests(ITestOutputHelper output) : base(output)
         {
         }
 

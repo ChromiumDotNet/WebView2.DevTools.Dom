@@ -7,9 +7,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageQuerySelectorEvalTests : DevTooolsContextBaseTest
+    public class DevToolsContextQuerySelectorEvalTests : DevTooolsContextBaseTest
     {
-        public PageQuerySelectorEvalTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextQuerySelectorEvalTests(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -50,7 +50,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         [WebView2ContextFact]
         public async Task ShouldThrowErrorIfNoElementIsFound()
         {
-            var exception = await Assert.ThrowsAsync<SelectorException>(()
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsSelectorException>(()
                 => DevToolsContext.QuerySelectorAsync("section").EvaluateFunctionAsync<string>("e => e.id"));
             Assert.Contains("failed to find element matching selector", exception.Message);
         }

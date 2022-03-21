@@ -83,7 +83,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact(Skip = "Crashes WebView2")]
         public async Task ShouldThrowWhenEvaluationTriggersReload()
         {
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
             {
                 return DevToolsContext.EvaluateFunctionAsync(@"() => {
                     location.reload();
@@ -124,7 +124,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact]
         public async Task ShouldRejectPromiseWithExeption()
         {
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
             {
                 return DevToolsContext.EvaluateFunctionAsync("() => not_existing_object.property");
             });
@@ -135,7 +135,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact]
         public async Task ShouldSupportThrownStringsAsErrorMessages()
         {
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(
                 () => DevToolsContext.EvaluateExpressionAsync("throw 'qwerty'"));
             Assert.Contains("qwerty", exception.Message);
         }
@@ -143,7 +143,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact]
         public async Task ShouldSupportThrownNumbersAsErrorMessages()
         {
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(
                             () => DevToolsContext.EvaluateExpressionAsync("throw 100500"));
             Assert.Contains("100500", exception.Message);
         }
@@ -225,7 +225,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             WebView2DevToolsContextException exception = await Assert.ThrowsAsync<WebView2DevToolsContextException>(() => windowHandle.JsonValueAsync());
             var errorText = exception.Message;
 
-            exception = await Assert.ThrowsAsync<EvaluationFailedException>(() => DevToolsContext.EvaluateFunctionAsync(@"errorText =>
+            exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() => DevToolsContext.EvaluateFunctionAsync(@"errorText =>
             {
                 throw new Error(errorText);
             }", errorText));
@@ -263,14 +263,17 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             Assert.Contains("HtmlElement is disposed", exception.Message);
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact()]
         public async Task ShouldThrowIfElementHandlesAreFromOtherFrames()
         {
+            const string expected = "JavascriptHandle can be evaluated only in the context they were created";
+
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
             var bodyHandle = await DevToolsContext.FirstChildFrame().QuerySelectorAsync("body");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(()
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(()
                 => DevToolsContext.EvaluateFunctionAsync<string>("body => body.innerHTML", bodyHandle));
-            Assert.Contains("JavascriptHandle can be evaluated only in the context they were created", exception.Message);
+
+            Assert.Contains(expected, exception.Message);
         }
 
         [WebView2ContextFact]
@@ -290,7 +293,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
                 WebView.CoreWebView2.WaitForNavigationAsync(),
                 executionContext.EvaluateFunctionAsync("() => window.location.reload()")
             );
-            var ex = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var ex = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
             {
                 return executionContext.EvaluateFunctionAsync("() => null");
             });
@@ -319,7 +322,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact]
         public async Task ShouldThrowErrorWithDetailedInformationOnExceptionInsidePromise()
         {
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
                 DevToolsContext.EvaluateFunctionAsync(
                     @"() => new Promise(() => {
                         throw new Error('Error in promise');

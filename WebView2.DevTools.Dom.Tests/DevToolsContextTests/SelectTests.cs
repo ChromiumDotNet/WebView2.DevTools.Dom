@@ -69,7 +69,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldThrowWhenElementIsNotASelect()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/select.html");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(async () => await DevToolsContext.SelectAsync("body", ""));
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(async () => await DevToolsContext.SelectAsync("body", ""));
             Assert.Contains("Element is not a <select> element.", exception.Message);
         }
 

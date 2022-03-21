@@ -6,9 +6,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageXPathTests : DevTooolsContextBaseTest
+    public class DevToolsContextXPathTests : DevTooolsContextBaseTest
     {
-        public PageXPathTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextXPathTests(ITestOutputHelper output) : base(output)
         {
         }
 

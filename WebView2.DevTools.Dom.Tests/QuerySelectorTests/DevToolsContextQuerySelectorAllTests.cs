@@ -7,9 +7,9 @@ using WebView2.DevTools.Dom.Tests.Attributes;
 namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageQuerySelectorAllTests : DevTooolsContextBaseTest
+    public class DevToolsContextQuerySelectorAllTests : DevTooolsContextBaseTest
     {
-        public PageQuerySelectorAllTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextQuerySelectorAllTests(ITestOutputHelper output) : base(output)
         {
         }
 

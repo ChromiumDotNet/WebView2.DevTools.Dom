@@ -7,9 +7,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.WaitForTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageWaitForTimeoutTests : DevTooolsContextBaseTest
+    public class DevToolsContextWaitForTimeoutTests : DevTooolsContextBaseTest
     {
-        public PageWaitForTimeoutTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextWaitForTimeoutTests(ITestOutputHelper output) : base(output)
         {
         }
 

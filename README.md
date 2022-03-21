@@ -114,7 +114,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
     }
 };
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/PageQuerySelectorTests.cs#L20-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML
@@ -151,7 +151,7 @@ var seven = await devToolsContext.EvaluateExpressionAsync<int>("4 + 3");
 var someObject = await devToolsContext.EvaluateFunctionAsync<dynamic>("(value) => ({a: value})", 5);
 System.Console.WriteLine(someObject.a);
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L19-L31' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L17-L29' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## NOT YET SUPPORTED

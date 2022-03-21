@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.EmulationTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageEmulateCPUThrottlingTests : DevTooolsContextBaseTest
+    public class DevToolsContextEmulateCPUThrottlingTests : DevTooolsContextBaseTest
     {
-        public PageEmulateCPUThrottlingTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextEmulateCPUThrottlingTests(ITestOutputHelper output) : base(output)
         {
         }
 

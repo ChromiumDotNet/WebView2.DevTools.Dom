@@ -112,7 +112,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldThrowWhenAddedWithContentToTheCSPPage()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/csp.html");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(
                 () => DevToolsContext.AddScriptTagAsync(new AddTagOptions
                 {
                     Content = "window.__injected = 35;"

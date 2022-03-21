@@ -194,7 +194,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
         public async Task ShouldFailToClickAMissingButton()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var exception = await Assert.ThrowsAsync<SelectorException>(()
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsSelectorException>(()
                 => DevToolsContext.ClickAsync("button.does-not-exist"));
             Assert.Equal("No node found for selector: button.does-not-exist", exception.Message);
             Assert.Equal("button.does-not-exist", exception.Selector);
@@ -295,7 +295,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             Assert.Equal("Clicked", await frame.EvaluateExpressionAsync<string>("window.result"));
         }
 
-        [WebView2ContextFact(Skip = "TODO: Fix this if possible")]
+        [WebView2ContextFact()]
         public async Task ShouldClickTheButtonWithDeviceScaleFactorSet()
         {
             await DevToolsContext.SetViewportAsync(new ViewPortOptions { Width = 400, Height = 400, DeviceScaleFactor = 5 });

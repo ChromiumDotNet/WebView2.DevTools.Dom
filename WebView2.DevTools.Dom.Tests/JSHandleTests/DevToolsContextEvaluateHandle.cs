@@ -7,9 +7,9 @@ using Xunit.Abstractions;
 namespace WebView2.DevTools.Dom.Tests.JSHandleTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class PageEvaluateHandle : DevTooolsContextBaseTest
+    public class DevToolsContextEvaluateHandle : DevTooolsContextBaseTest
     {
-        public PageEvaluateHandle(ITestOutputHelper output) : base(output)
+        public DevToolsContextEvaluateHandle(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -41,7 +41,7 @@ namespace WebView2.DevTools.Dom.Tests.JSHandleTests
         public async Task ShouldWarnOnNestedObjectHandles()
         {
             var aHandle = await DevToolsContext.EvaluateFunctionHandleAsync("() => document.body");
-            var exception = await Assert.ThrowsAsync<EvaluationFailedException>(() =>
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(() =>
                 DevToolsContext.EvaluateFunctionHandleAsync("(opts) => opts.elem.querySelector('p')", new { aHandle }));
             Assert.Contains("Are you passing a nested JSHandle?", exception.Message);
         }
