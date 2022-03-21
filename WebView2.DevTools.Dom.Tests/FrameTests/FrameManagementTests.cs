@@ -140,7 +140,7 @@ namespace WebView2.DevTools.Dom.Tests.FrameTests
             Assert.Single(DevToolsContext.Frames, frame => frame.Url == TestConstants.EmptyPage);
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact]
         public async Task ShouldReportFrameName()
         {
             await FrameUtils.AttachFrameAsync(DevToolsContext, "theFrameId", TestConstants.EmptyPage);
@@ -167,7 +167,7 @@ namespace WebView2.DevTools.Dom.Tests.FrameTests
             Assert.Equal(2, DevToolsContext.Frames.Count(f => f.ParentFrame == DevToolsContext.MainFrame));
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact]
         public async Task ShouldReportDifferentFrameInstanceWhenFrameReAttaches()
         {
             var frame1 = await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);

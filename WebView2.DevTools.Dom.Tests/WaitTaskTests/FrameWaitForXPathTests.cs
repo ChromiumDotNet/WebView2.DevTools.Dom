@@ -25,7 +25,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             Assert.Equal("hello  world  ", await DevToolsContext.EvaluateFunctionAsync<string>("x => x.textContent", await waitForXPath));
         }
 
-        [WebView2ContextFact(Skip = "devToolsProtocolHelper.Page.FrameNavigated isn't being called for some reason")]
+        [WebView2ContextFact]
         public async Task ShouldRunInSpecifiedFrame()
         {
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
@@ -40,7 +40,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             Assert.Equal(frame2.Id, eHandle.ExecutionContext.Frame.Id);
         }
 
-        [WebView2ContextFact(Skip ="TODO: Fix me")]
+        [WebView2ContextFact]
         public async Task ShouldThrowWhenFrameIsDetached()
         {
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);

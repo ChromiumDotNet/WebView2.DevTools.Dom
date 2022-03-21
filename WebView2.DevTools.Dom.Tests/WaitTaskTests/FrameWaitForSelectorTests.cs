@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;
@@ -76,7 +75,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             Assert.Equal(DevToolsContext.MainFrame.Id, eHandle.ExecutionContext.Frame.Id);
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact]
         public async Task ShouldRunInSpecifiedFrame()
         {
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
@@ -90,7 +89,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             Assert.Equal(frame2, eHandle.ExecutionContext.Frame);
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact]
         public async Task ShouldThrowWhenFrameIsDetached()
         {
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
@@ -102,7 +101,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             Assert.Contains("waitForFunction failed: frame got detached.", waitException.Message);
         }
 
-        [WebView2ContextFact(Skip = "BUG: OOPIFs aren't working correct")]
+        [WebView2ContextFact]
         public async Task ShouldSurviveCrossProcessNavigation()
         {
             var boxFound = false;
