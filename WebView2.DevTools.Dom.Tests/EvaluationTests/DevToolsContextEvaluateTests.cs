@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using WebView2.DevTools.Dom;
 using System.Numerics;
 using WebView2.DevTools.Dom.Tests.Attributes;
-using System.Text.Json;
 using System;
 
 namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
@@ -25,6 +23,14 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             var result = await DevToolsContext.EvaluateFunctionAsync<int>(script);
             Assert.Equal(expected, result);
         }
+
+        [WebView2ContextFact]
+        public async Task ShouldReturnMeaningOfLifeViaPromise()
+        {
+            const int expected = 42;
+            var result = await DevToolsContext.EvaluateFunctionAsync<int>("() => Promise.resolve(42)");
+            Assert.Equal(expected, result);
+        }        
 
         [WebView2ContextFact]
         public async Task ShouldTransferBigInt()

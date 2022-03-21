@@ -46,6 +46,8 @@ namespace WebView2.DevTools.Dom.Wpf.Example
                     });
                 });
 
+                var meaningOfLifeAsInt = await devToolsContext.EvaluateFunctionAsync<int>("() => Promise.resolve(42)");
+
                 var jsAlertButton = await devToolsContext.QuerySelectorAsync("#jsAlertButton");
                 var csAlertButton = await devToolsContext.QuerySelectorAsync("#csAlertButton");
 

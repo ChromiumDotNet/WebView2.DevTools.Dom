@@ -150,10 +150,13 @@ await webView2Browser.EnsureCoreWebView2Async();
 await using var devToolsContext = await webView2Browser.CoreWebView2.CreateDevToolsContextAsync();
 await devToolsContext.IgnoreCertificateErrorsAsync(true);
 var seven = await devToolsContext.EvaluateExpressionAsync<int>("4 + 3");
+// Can evaluate a function that returns a Promise
+var fourtyTwo = await devToolsContext.EvaluateFunctionAsync<int>("() => Promise.resolve(42)");
+// Pass in arguments to a function, including references to HtmlElements and JavascriptHandles
 var someObject = await devToolsContext.EvaluateFunctionAsync<dynamic>("(value) => ({a: value})", 5);
 System.Console.WriteLine(someObject.a);
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L17-L29' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/ElementHandleQuerySelectorEvalTests.cs#L17-L32' title='Snippet source file'>snippet source</a> | <a href='#snippet-evaluate' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## NOT YET SUPPORTED
