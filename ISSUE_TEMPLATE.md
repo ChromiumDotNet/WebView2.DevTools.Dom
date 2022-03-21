@@ -2,7 +2,7 @@
 
 **Before you file a bug, have you:**
 
-* Considered if this is a question and not a bug?. For questions please use Discussions, if unuse use Discussions (https://github.com/amaitland/WebView2.DevTools.Dom/discussions).
+* Considered if this is a question and not a bug?. For questions please use Discussions, if unuse use Discussions (https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/discussions).
 * Tried upgrading to newest version of WebView2.DevTools.Dom, to see if your issue has already been resolved and released?
 * Checked existing open *and* closed issues, to see if the issue has already been reported?
 * Tried reproducing your problem in a new isolated project?
@@ -20,7 +20,7 @@ E.g.
 
 ```csharp
 // Arrange
-var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
+await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
 
 // Act
 ...
