@@ -17,7 +17,7 @@ The xUnit tests are avaliable as part of this repository.
 # Prerequisites
 
  * .Net 4.6.2 or .Net Core 3.1 or greater
- * Microsoft.Web.WebView2.DevToolsProtocolExtension 1.0.824 or greater
+ * [Microsoft.Web.WebView2.DevToolsProtocolExtension](https://www.nuget.org/packages/Microsoft.Web.WebView2.DevToolsProtocolExtension/) 1.0.824 or greater
 
 # Questions and Support
 
