@@ -19,8 +19,8 @@ namespace WebView2.DevTools.Dom.Tests
             {
                 coreWebView2.NavigationCompleted -= evt;
 
-                if(args.IsSuccess)
-{
+                if (args.IsSuccess)
+                {
                     // NavigationComplete is called before the page has finished rendering for cases like
                     // our very simple test pages.
                     // Mouse and Keyboard tests require the page to actually finish rendering, so we add a delay here
@@ -32,7 +32,7 @@ namespace WebView2.DevTools.Dom.Tests
                 else
                 {
                     tcs.TrySetException(new Exception("Nav Failed With Error:" + args.WebErrorStatus.ToString()));
-                }                
+                }
             };
 
             coreWebView2.NavigationCompleted += evt;
