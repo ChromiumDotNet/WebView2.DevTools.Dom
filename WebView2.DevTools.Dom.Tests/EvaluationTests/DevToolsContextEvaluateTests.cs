@@ -258,7 +258,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             var element = await DevToolsContext.QuerySelectorAsync("section");
             Assert.NotNull(element);
             await element.DisposeAsync();
-            var exception = await Assert.ThrowsAsync<WebView2DevToolsContextException>(()
+            var exception = await Assert.ThrowsAsync<WebView2DevToolsEvaluationFailedException>(()
                 => DevToolsContext.EvaluateFunctionAsync<string>("e => e.textContent", element));
             Assert.Contains("HtmlElement is disposed", exception.Message);
         }
@@ -266,7 +266,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact()]
         public async Task ShouldThrowIfElementHandlesAreFromOtherFrames()
         {
-            const string expected = "JavascriptHandle can be evaluated only in the context they were created";
+            const string expected = "RemoteObjects can be evaluated only in the context they were created!";
 
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
             var bodyHandle = await DevToolsContext.FirstChildFrame().QuerySelectorAsync("body");
