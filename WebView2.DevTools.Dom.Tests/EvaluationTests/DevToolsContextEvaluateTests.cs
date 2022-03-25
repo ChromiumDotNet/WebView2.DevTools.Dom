@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using System.Numerics;
 using WebView2.DevTools.Dom.Tests.Attributes;
-using System;
+using System.Text.Json;
 
 namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
 {
     [Collection(TestConstants.TestFixtureCollectionName)]
-    public class EvaluateTests : DevTooolsContextBaseTest
+    public class DevToolsContextEvaluateTests : DevTooolsContextBaseTest
     {
-        public EvaluateTests(ITestOutputHelper output) : base(output)
+        public DevToolsContextEvaluateTests(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -336,24 +337,24 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             Assert.Contains("Error in promise", exception.Message);
         }
 
-        [WebView2ContextFact(Skip = "TODO: Fix this")]
-        public Task ShouldWorkWithDifferentSerializerSettings()
+        [WebView2ContextFact]
+        public async Task ShouldWorkWithDifferentSerializerSettings()
         {
-            throw new NotImplementedException();
+            var result = await DevToolsContext.EvaluateFunctionAsync<ComplexObjectTestClass>("() => { return { foo: 'bar' }}");
+            Assert.Equal("bar", result.Foo);
 
-            //var result = await Page.EvaluateFunctionAsync<ComplexObjectTestClass>("() => { return { foo: 'bar' }}");
-            //Assert.Equal("bar", result.Foo);
+            var jsonElement = await DevToolsContext.EvaluateFunctionAsync<JsonElement>("() => { return { Foo: 'bar' }}");
 
-            //result = (await Page.EvaluateFunctionAsync<JsonElement>("() => { return { Foo: 'bar' }}"))
-            //    .ToObject<ComplexObjectTestClass>();
-            //Assert.Equal("bar", result.Foo);
+            result = ToObject<ComplexObjectTestClass>(jsonElement);
+            Assert.Equal("bar", result.Foo);
 
-            //result = await Page.EvaluateExpressionAsync<ComplexObjectTestClass>("var obj = { foo: 'bar' }; obj;");
-            //Assert.Equal("bar", result.Foo);
+            result = await DevToolsContext.EvaluateExpressionAsync<ComplexObjectTestClass>("var obj = { foo: 'bar' }; obj;");
+            Assert.Equal("bar", result.Foo);
 
-            //result = (await Page.EvaluateExpressionAsync<JsonElement>("var obj = { Foo: 'bar' }; obj;"))
-            //    .ToObject<ComplexObjectTestClass>();
-            //Assert.Equal("bar", result.Foo);
+            jsonElement = await DevToolsContext.EvaluateExpressionAsync<JsonElement>("var obj = { Foo: 'bar' }; obj;");
+
+            result = ToObject<ComplexObjectTestClass>(jsonElement);
+            Assert.Equal("bar", result.Foo);
         }
 
         [WebView2ContextFact]
@@ -373,32 +374,51 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
             Assert.Equal("42", text);
         }
 
-        [WebView2ContextFact(Skip = "TODO: Fix me")]
-        public Task ShouldWorkWithoutGenerics()
+        [WebView2ContextFact]
+        public async Task ShouldWorkWithoutGenerics()
         {
-            throw new System.NotImplementedException();
-            //Assert.NotNull(await Page.EvaluateExpressionAsync("var obj = {}; obj;"));
-            //Assert.NotNull(await Page.EvaluateExpressionAsync("[]"));
-            //Assert.NotNull(await Page.EvaluateExpressionAsync("''"));
+            var obj = await DevToolsContext.EvaluateExpressionAsync("var obj = {}; obj;");
 
-            //var objectPopulated = await Page.EvaluateExpressionAsync("var obj = {a:1}; obj;");
-            //Assert.NotNull(objectPopulated);
-            //Assert.Equal(1, objectPopulated["a"]);
+            Assert.Equal(JsonValueKind.Object, obj.ValueKind);
 
-            //var arrayPopulated = await Page.EvaluateExpressionAsync("[1]");
-            //Assert.IsType<JArray>(arrayPopulated);
-            //Assert.Equal(1, ((JArray)arrayPopulated)[0]);
+            var arr = await DevToolsContext.EvaluateExpressionAsync("[]");
 
-            //Assert.Equal("1", await Page.EvaluateExpressionAsync("'1'"));
-            //Assert.Equal(1, await Page.EvaluateExpressionAsync("1"));
-            //Assert.Equal(11111111, await Page.EvaluateExpressionAsync("11111111"));
-            //Assert.Equal(11111111111111, await Page.EvaluateExpressionAsync("11111111111111"));
-            //Assert.Equal(1.1, await Page.EvaluateExpressionAsync("1.1"));
+            Assert.Equal(JsonValueKind.Array, arr.ValueKind);
+
+            var str = await DevToolsContext.EvaluateExpressionAsync("''");
+
+            Assert.Equal(JsonValueKind.String, str.ValueKind);
+
+            var objectPopulated = await DevToolsContext.EvaluateExpressionAsync("var obj = {a:1}; obj;");
+            Assert.Equal(JsonValueKind.Object, objectPopulated.ValueKind);
+            Assert.Equal(1, objectPopulated.GetProperty("a").GetInt32());
+
+            var arrayPopulated = await DevToolsContext.EvaluateExpressionAsync("[1]");
+            Assert.Equal(JsonValueKind.Array, arrayPopulated.ValueKind);
+            Assert.Equal(1, arrayPopulated.EnumerateArray().First().GetInt32());
+
+            Assert.Equal("1", (await DevToolsContext.EvaluateExpressionAsync("'1'")).GetString());
+            Assert.Equal(1, (await DevToolsContext.EvaluateExpressionAsync("1")).GetInt32());
+            Assert.Equal(11111111, (await DevToolsContext.EvaluateExpressionAsync("11111111")).GetInt32());
+            Assert.Equal(11111111111111, (await DevToolsContext.EvaluateExpressionAsync("11111111111111")).GetDouble());
+            Assert.Equal(1.1, (await DevToolsContext.EvaluateExpressionAsync("1.1")).GetDouble());
         }
 
         public class ComplexObjectTestClass
         {
             public string Foo { get; set; }
+        }
+
+        private static T ToObject<T>(JsonElement token)
+            where T : class
+        {
+            var json = token.GetRawText();
+
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+            {
+                IgnoreNullValues = true,
+                PropertyNameCaseInsensitive = true
+            });
         }
     }
 }
