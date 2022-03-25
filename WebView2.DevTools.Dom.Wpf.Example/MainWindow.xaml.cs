@@ -72,8 +72,8 @@ namespace WebView2.DevTools.Dom.Wpf.Example
 
                 void callback(NodaTime.Duration timestamp)
                 {
-                    _ = currentTimeSpan.SetInnerText(GetCurrentDateTime());
-                    _ = fpsSpan.SetInnerText(CalculateFps(timestamp).ToString());
+                    _ = currentTimeSpan.SetInnerTextAsync(GetCurrentDateTime());
+                    _ = fpsSpan.SetInnerTextAsync(CalculateFps(timestamp).ToString());
 
                     _ = devToolsContext.EvaluateExpressionAsync(@"window.requestAnimationFrame((x) => { window.requestAnimationFrameCallback(x)});");
                 }

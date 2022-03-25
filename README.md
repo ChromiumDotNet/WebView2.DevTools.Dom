@@ -65,25 +65,39 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
     {
         // WebView2DevToolsContext implements IAsyncDisposable and can be Disposed
         // via await using or await devToolsContext.DisposeAsync();
-        // Only DisposeAsync is supported. It's very important the WebView2DevToolsContext is Disposed
-        // When you have finished. Only create a single instance at a time, reuse an instance rather than
-        // creaeting a new WebView2DevToolsContext. Dispose the old WebView2DevToolsContext instance before
-        // creating a new instance if you need to manage the lifespan manually.
         // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#using-async-disposable
-        await using var devtoolsContext = await coreWebView2.CreateDevToolsContextAsync();
+        await using var devToolsContext = await coreWebView2.CreateDevToolsContextAsync();
 
         // Get element by Id
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
-        var element = await devtoolsContext.QuerySelectorAsync("#myElementId");
+        var element = await devToolsContext.QuerySelectorAsync("#myElementId");
+
+        //Strongly typed element types
+        //Only a subset of element types have been added so far, use HtmlElement as a generic type for all others
+        var htmlDivElement = await devToolsContext.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
+        var htmlSpanElement = await devToolsContext.QuerySelectorAsync<HtmlSpanElement>("#mySpanElementId");
+        var htmlSelectElement = await devToolsContext.QuerySelectorAsync<HtmlSelectElement>("#mySelectElementId");
+        var htmlInputElement = await devToolsContext.QuerySelectorAsync<HtmlInputElement>("#myInputElementId");
+        var htmlFormElement = await devToolsContext.QuerySelectorAsync<HtmlFormElement>("#myFormElementId");
+        var htmlAnchorElement = await devToolsContext.QuerySelectorAsync<HtmlAnchorElement>("#myAnchorElementId");
+        var htmlImageElement = await devToolsContext.QuerySelectorAsync<HtmlImageElement>("#myImageElementId");
+        var htmlTextAreaElement = await devToolsContext.QuerySelectorAsync<HtmlImageElement>("#myTextAreaElementId");
+        var htmlButtonElement = await devToolsContext.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId");
+        var htmlParagraphElement = await devToolsContext.QuerySelectorAsync<HtmlParagraphElement>("#myParagraphElementId");
 
         // Get a custom attribute value
-        var customAttribute = await element.GetAttributeValueAsync<string>("data-customAttribute");
+        var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
 
         //Set innerText property for the element
         await element.SetPropertyValueAsync("innerText", "Welcome!");
 
+        await element.SetInnerTextAsync("Welcome 2!");
+
         //Get innerText property for the element
-        var innerText = await element.GetPropertyValueAsync<string>("innerText");
+        var innerText = await element.GetInnerTextAsync();
+        //Can also be acessed via calling GetPropertyValueAsync
+        //Can use this method to get any property that isn't currently mapped
+        innerText = await element.GetPropertyValueAsync<string>("innerText");
 
         //Get all child elements
         var childElements = await element.QuerySelectorAllAsync("div");
@@ -102,7 +116,21 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
         //Click The element
         await element.ClickAsync();
 
-        var divElements = await devtoolsContext.QuerySelectorAllAsync("div");
+        //Event Handler
+        //Expose a function to javascript, functions persist across navigations
+        //So only need to do this once
+        await devToolsContext.ExposeFunctionAsync("jsAlertButtonClick", () =>
+        {
+            _ = devToolsContext.EvaluateExpressionAsync("window.alert('Hello! You invoked window.alert()');");
+        });
+
+        var jsAlertButton = await devToolsContext.QuerySelectorAsync("#jsAlertButton");
+
+        //Write up the click event listner to call our exposed function
+        _ = jsAlertButton.AddEventListenerAsync("click", "jsAlertButtonClick");
+
+        //Get a collection of HtmlElements
+        var divElements = await devToolsContext.QuerySelectorAllAsync("div");
 
         foreach (var div in divElements)
         {
@@ -112,13 +140,13 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
             //Set the border to 1px solid red
             await style.SetPropertyAsync("border", "1px solid red", important: true);
 
-            await div.SetAttributeValueAsync("data-customAttribute", "123");
-            await div.SetPropertyValueAsync("innerText", "Updated Div innerText");
+            await div.SetAttributeAsync("data-customAttribute", "123");
+            await div.SetInnerTextAsync("Updated Div innerText");
         }
     }
 };
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L84' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L112' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML
