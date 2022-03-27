@@ -16,7 +16,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldWork()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.ClickAsync();
             Assert.Equal("Clicked", await DevToolsContext.EvaluateExpressionAsync<string>("result"));
         }
@@ -25,7 +25,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldWorkForShadowDomV1()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/shadow.html");
-            var buttonHandle = (HtmlElement)await DevToolsContext.EvaluateExpressionHandleAsync("button");
+            var buttonHandle = (HtmlButtonElement)await DevToolsContext.EvaluateExpressionHandleAsync("button");
             await buttonHandle.ClickAsync();
             Assert.True(await DevToolsContext.EvaluateExpressionAsync<bool>("clicked"));
         }
