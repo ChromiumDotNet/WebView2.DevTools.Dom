@@ -21,10 +21,10 @@ The xUnit tests are avaliable as part of this repository.
 
 # Questions and Support
 
-Sponsors can:
-
 * Ask a question on [Discussions](https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/discussions).
 * File bug reports on [Issues](https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/issues).
+
+Need priority support? Signup to the [WebView2 DevTools Dom Supporter](https://github.com/sponsors/amaitland/) tier on GitHub Sponsors.
 
 # Usage
 
