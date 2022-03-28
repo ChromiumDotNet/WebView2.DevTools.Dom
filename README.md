@@ -28,6 +28,10 @@ Need priority support? Signup to the [WebView2 DevTools Dom Supporter](https://g
 
 # Usage
 
+## Quick Start Tutorial (YouTube)
+
+[![WebView2 DevTools Dom Quick Start tutorial on Youtube](http://img.youtube.com/vi/8wcSWD4PjfI/0.jpg)](http://www.youtube.com/watch?v=8wcSWD4PjfI "WebView2 DevTools Dom Tutorial One Search microsoft.com")
+
 ## WebView2DevToolsContext
 
 The **WebView2DevToolsContext** class is the main entry point into the library and can be created from a
