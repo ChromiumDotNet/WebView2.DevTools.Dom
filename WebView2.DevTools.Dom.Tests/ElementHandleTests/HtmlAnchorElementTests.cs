@@ -23,6 +23,15 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         }
 
         [WebView2ContextFact]
+        public async Task ShouldReturnNull()
+        {
+            await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
+            var element = await DevToolsContext.QuerySelectorAsync<HtmlAnchorElement>("a");
+
+            Assert.Null(element);
+        }
+
+        [WebView2ContextFact]
         public async Task ShouldSetThenGetDisabled()
         {
             const string expected = "_blank";
