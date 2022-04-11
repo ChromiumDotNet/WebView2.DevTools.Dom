@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;

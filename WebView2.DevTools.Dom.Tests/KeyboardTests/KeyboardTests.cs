@@ -52,24 +52,32 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
         [WebView2ContextFact]
         public async Task ShouldSendACharacterWithElementHandlePress()
         {
+            const string expected = "a";
+
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
-            var textarea = await DevToolsContext.QuerySelectorAsync("textarea");
-            await textarea.PressAsync("a");
-            Assert.Equal("a", await DevToolsContext.EvaluateExpressionAsync<string>("document.querySelector('textarea').value"));
+            var textarea = await DevToolsContext.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
+            await textarea.PressAsync(expected);
+
+            var actual = await textarea.GetValueAsync();
+
+            Assert.Equal(expected, actual);
 
             await DevToolsContext.EvaluateExpressionAsync("window.addEventListener('keydown', e => e.preventDefault(), true)");
 
             await textarea.PressAsync("b");
-            Assert.Equal("a", await DevToolsContext.EvaluateExpressionAsync<string>("document.querySelector('textarea').value"));
+
+            actual = await textarea.GetValueAsync();
+
+            Assert.Equal(expected, actual);
         }
 
         [WebView2ContextFact]
         public async Task ElementHandlePressShouldSupportTextOption()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
-            var textarea = await DevToolsContext.QuerySelectorAsync("textarea");
+            var textarea = await DevToolsContext.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
             await textarea.PressAsync("a", new PressOptions { Text = "ё" });
-            var actual = await DevToolsContext.EvaluateExpressionAsync<string>("document.querySelector('textarea').value");
+            var actual = await textarea.GetValueAsync();
             Assert.Equal("ё", actual);
         }
 
@@ -186,6 +194,7 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
         public async Task ShouldSpecifyRepeatProperty()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
+
             await DevToolsContext.FocusAsync("textarea");
             await DevToolsContext.EvaluateExpressionAsync("document.querySelector('textarea').addEventListener('keydown', e => window.lastEvent = e, true)");
             await DevToolsContext.Keyboard.DownAsync("a");
@@ -199,13 +208,20 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
             Assert.True(expected);
 
             await DevToolsContext.Keyboard.DownAsync("b");
-            Assert.False(await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat"));
+
+            expected = await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat");
+            Assert.False(expected);
             await DevToolsContext.Keyboard.DownAsync("b");
-            Assert.True(await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat"));
+
+            expected = await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat");
+            Assert.True(expected);
 
             await DevToolsContext.Keyboard.UpAsync("a");
             await DevToolsContext.Keyboard.DownAsync("a");
-            Assert.False(await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat"));
+
+            expected = await DevToolsContext.EvaluateExpressionAsync<bool>("window.lastEvent.repeat");
+
+            Assert.False(expected);
         }
 
         [WebView2ContextFact]
@@ -225,7 +241,7 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
             await DevToolsContext.EvaluateExpressionAsync(@"{
               window.addEventListener('keydown', event => window.keyLocation = event.location, true);
             }");
-            var textarea = await DevToolsContext.QuerySelectorAsync("textarea");
+            var textarea = await DevToolsContext.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
 
             await textarea.PressAsync("Digit5");
             Assert.Equal(0, await DevToolsContext.EvaluateExpressionAsync<int>("keyLocation"));
@@ -266,7 +282,7 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.EmptyPage);
             await FrameUtils.AttachFrameAsync(DevToolsContext, "emoji-test", TestConstants.ServerUrl + "/input/textarea.html");
             var frame = DevToolsContext.FirstChildFrame();
-            var textarea = await frame.QuerySelectorAsync("textarea");
+            var textarea = await frame.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
             await textarea.TypeAsync("👹 Tokyo street Japan \uD83C\uDDEF\uD83C\uDDF5");
             Assert.Equal(
                 "👹 Tokyo street Japan \uD83C\uDDEF\uD83C\uDDF5",

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Input;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
@@ -12,6 +11,8 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
     [Collection(TestConstants.TestFixtureCollectionName)]
     public class MouseTests : DevTooolsContextBaseTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
         private const string Dimensions = @"function dimensions() {
             const rect = document.querySelector('textarea').getBoundingClientRect();
             return {
@@ -24,6 +25,7 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
 
         public MouseTests(ITestOutputHelper output) : base(output)
         {
+            _testOutputHelper = output;
         }
 
         [WebView2ContextFact]
@@ -58,6 +60,7 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
         public async Task ShouldResizeTheTextarea()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
+
             var dimensions = await DevToolsContext.EvaluateFunctionAsync<Dimensions>(Dimensions);
             var mouse = DevToolsContext.Mouse;
             await mouse.MoveAsync(dimensions.X + dimensions.Width - 4, dimensions.Y + dimensions.Height - 4);
@@ -72,9 +75,11 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
         [WebView2ContextFact]
         public async Task ShouldSelectTheTextWithMouse()
         {
+            const string expectedText = "This is the text that we are going to try to select. Let's see how it goes.";
+
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
             await DevToolsContext.FocusAsync("textarea");
-            const string expectedText = "This is the text that we are going to try to select. Let's see how it goes.";
+            
             await DevToolsContext.Keyboard.TypeAsync(expectedText);
             await DevToolsContext.EvaluateExpressionAsync("document.querySelector('textarea').scrollTop = 0");
             var dimensions = await DevToolsContext.EvaluateFunctionAsync<Dimensions>(Dimensions);

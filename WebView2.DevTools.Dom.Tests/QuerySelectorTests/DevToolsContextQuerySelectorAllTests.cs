@@ -14,6 +14,26 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         }
 
         [WebView2ContextFact]
+        public async Task ShouldWork()
+        {
+            await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/table.html");
+            var elements = await DevToolsContext.QuerySelectorAllAsync<HtmlTableRowElement>("tr");
+
+            Assert.NotNull(elements);
+            Assert.Equal(4, elements.Length);
+        }
+
+        [WebView2ContextFact]
+        public async Task ShouldReturnEmptyArray()
+        {
+            await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/table.html");
+            var elements = await DevToolsContext.QuerySelectorAllAsync<HtmlTableRowElement>("#table2 tr");
+
+            Assert.NotNull(elements);
+            Assert.Empty(elements);
+        }
+
+        [WebView2ContextFact]
         public async Task ShouldQueryExistingElements()
         {
             await DevToolsContext.SetContentAsync("<div>A</div><br/><div>B</div>");

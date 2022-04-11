@@ -88,6 +88,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
         var htmlTextAreaElement = await devToolsContext.QuerySelectorAsync<HtmlImageElement>("#myTextAreaElementId");
         var htmlButtonElement = await devToolsContext.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId");
         var htmlParagraphElement = await devToolsContext.QuerySelectorAsync<HtmlParagraphElement>("#myParagraphElementId");
+        var htmlTableElement = await devToolsContext.QuerySelectorAsync<HtmlTableElement>("#myTableElementId");
 
         // Get a custom attribute value
         var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
@@ -134,7 +135,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
         _ = jsAlertButton.AddEventListenerAsync("click", "jsAlertButtonClick");
 
         //Get a collection of HtmlElements
-        var divElements = await devToolsContext.QuerySelectorAllAsync("div");
+        var divElements = await devToolsContext.QuerySelectorAllAsync<HtmlDivElement>("div");
 
         foreach (var div in divElements)
         {
@@ -147,10 +148,39 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
             await div.SetAttributeAsync("data-customAttribute", "123");
             await div.SetInnerTextAsync("Updated Div innerText");
         }
+
+        //Using standard array
+        var tableRows = await htmlTableElement.GetRowsAsync().ToArrayAsync();
+
+        foreach(var row in tableRows)
+        {
+            var cells = await row.GetCellsAsync().ToArrayAsync();
+            foreach(var cell in cells)
+            {
+                var newDiv = await devToolsContext.CreateHtmlElementAsync<HtmlDivElement>("div");
+                await newDiv.SetInnerTextAsync("New Div Added!");
+                await cell.AppendChildAsync(newDiv);
+            }
+        }
+
+        //Get a reference to the HtmlCollection and use async enumerable
+        //Requires Net Core 3.1 or higher
+        var tableRowsHtmlCollection = await htmlTableElement.GetRowsAsync();
+
+        await foreach (var row in tableRowsHtmlCollection)
+        {
+            var cells = await row.GetCellsAsync();
+            await foreach (var cell in cells)
+            {
+                var newDiv = await devToolsContext.CreateHtmlElementAsync<HtmlDivElement>("div");
+                await newDiv.SetInnerTextAsync("New Div Added!");
+                await cell.AppendChildAsync(newDiv);
+            }
+        }
     }
 };
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L112' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L142' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML

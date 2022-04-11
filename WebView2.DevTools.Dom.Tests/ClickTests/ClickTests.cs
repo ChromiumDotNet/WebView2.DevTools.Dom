@@ -94,7 +94,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
 
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
             await DevToolsContext.FocusAsync("textarea");
-            
+
             await DevToolsContext.Keyboard.TypeAsync(expected);
             await DevToolsContext.ClickAsync("textarea");
             await DevToolsContext.ClickAsync("textarea", new ClickOptions { ClickCount = 2 });
@@ -221,7 +221,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
                  window.double = true;
                });
             }");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.ClickAsync(new ClickOptions { ClickCount = 2 });
             Assert.True(await DevToolsContext.EvaluateExpressionAsync<bool>("double"));
             Assert.Equal("Clicked", await DevToolsContext.EvaluateExpressionAsync<string>("result"));
@@ -273,7 +273,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             await DevToolsContext.SetContentAsync("<div style=\"width:100px;height:100px\">spacer</div>");
             await FrameUtils.AttachFrameAsync(DevToolsContext, "button-test", TestConstants.ServerUrl + "/input/button.html");
             var frame = DevToolsContext.FirstChildFrame();
-            var button = await frame.QuerySelectorAsync("button");
+            var button = await frame.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.ClickAsync();
             Assert.Equal("Clicked", await frame.EvaluateExpressionAsync<string>("window.result"));
         }
@@ -295,7 +295,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             Assert.Equal("Clicked", await frame.EvaluateExpressionAsync<string>("window.result"));
         }
 
-        [WebView2ContextFact()]
+        [WebView2ContextFact]
         public async Task ShouldClickTheButtonWithDeviceScaleFactorSet()
         {
             await DevToolsContext.SetViewportAsync(new ViewPortOptions { Width = 400, Height = 400, DeviceScaleFactor = 5 });
@@ -303,7 +303,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             await DevToolsContext.SetContentAsync("<div style=\"width:100px;height:100px\">spacer</div>");
             await FrameUtils.AttachFrameAsync(DevToolsContext, "button-test", TestConstants.ServerUrl + "/input/button.html");
             var frame = DevToolsContext.FirstChildFrame();
-            var button = await frame.QuerySelectorAsync("button");
+            var button = await frame.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.ClickAsync();
             Assert.Equal("Clicked", await frame.EvaluateExpressionAsync<string>("window.result"));
         }

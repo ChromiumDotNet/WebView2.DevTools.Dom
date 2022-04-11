@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;
@@ -36,7 +35,11 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
                 .ContinueWith(_ => success = true);
             await DevToolsContext.EvaluateExpressionAsync("window.__FOO = 'hit'");
             Assert.False(success);
-            await DevToolsContext.EvaluateExpressionAsync("document.body.appendChild(document.createElement('div'))");
+
+            var div = await DevToolsContext.CreateHtmlElementAsync<HtmlDivElement>("div");
+
+            await DevToolsContext.AppendChildAsync(div);
+
             await watchdog;
             Assert.True((DateTime.Now - startTime).TotalMilliseconds > polling / 2);
         }

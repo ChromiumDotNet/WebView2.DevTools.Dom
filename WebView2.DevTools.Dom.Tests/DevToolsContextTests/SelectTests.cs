@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
 using Xunit.Abstractions;
@@ -48,7 +47,11 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldSelectMultipleOptions()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/select.html");
-            await DevToolsContext.EvaluateExpressionAsync("makeMultiple()");
+
+            var select = await DevToolsContext.QuerySelectorAsync<HtmlSelectElement>("select");
+
+            await select.SetMultipleAsync(true);
+
             await DevToolsContext.SelectAsync("select", "blue", "green", "red");
             Assert.Equal(new string[] { "blue", "green", "red" },
                          await DevToolsContext.EvaluateExpressionAsync<string[]>("result.onInput"));
@@ -85,7 +88,11 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldReturnAnArrayOfMatchedValues()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/select.html");
-            await DevToolsContext.EvaluateExpressionAsync("makeMultiple()");
+
+            var select = await DevToolsContext.QuerySelectorAsync<HtmlSelectElement>("select");
+
+            await select.SetMultipleAsync(true);
+
             var result = await DevToolsContext.SelectAsync("select", "blue", "black", "magenta");
             Array.Sort(result);
             Assert.Equal(new string[] { "black", "blue", "magenta" }, result);
@@ -109,7 +116,11 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         public async Task ShouldDeselectAllOptionsWhenPassedNoValuesForAMultipleSelect()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/select.html");
-            await DevToolsContext.EvaluateExpressionAsync("makeMultiple()");
+
+            var select = await DevToolsContext.QuerySelectorAsync<HtmlSelectElement>("select");
+
+            await select.SetMultipleAsync(true);
+
             await DevToolsContext.SelectAsync("select", "blue", "black", "magenta");
             await DevToolsContext.SelectAsync("select");
             Assert.True(await DevToolsContext.QuerySelectorAsync("select").EvaluateFunctionAsync<bool>(

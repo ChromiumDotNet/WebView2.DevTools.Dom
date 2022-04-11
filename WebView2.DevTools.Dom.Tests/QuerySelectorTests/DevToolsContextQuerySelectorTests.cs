@@ -47,6 +47,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
                     var htmlTextAreaElement = await devToolsContext.QuerySelectorAsync<HtmlImageElement>("#myTextAreaElementId");
                     var htmlButtonElement = await devToolsContext.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId");
                     var htmlParagraphElement = await devToolsContext.QuerySelectorAsync<HtmlParagraphElement>("#myParagraphElementId");
+                    var htmlTableElement = await devToolsContext.QuerySelectorAsync<HtmlTableElement>("#myTableElementId");
 
                     // Get a custom attribute value
                     var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
@@ -93,7 +94,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
                     _ = jsAlertButton.AddEventListenerAsync("click", "jsAlertButtonClick");
 
                     //Get a collection of HtmlElements
-                    var divElements = await devToolsContext.QuerySelectorAllAsync("div");
+                    var divElements = await devToolsContext.QuerySelectorAllAsync<HtmlDivElement>("div");
 
                     foreach (var div in divElements)
                     {
@@ -105,6 +106,35 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 
                         await div.SetAttributeAsync("data-customAttribute", "123");
                         await div.SetInnerTextAsync("Updated Div innerText");
+                    }
+
+                    //Using standard array
+                    var tableRows = await htmlTableElement.GetRowsAsync().ToArrayAsync();
+
+                    foreach(var row in tableRows)
+                    {
+                        var cells = await row.GetCellsAsync().ToArrayAsync();
+                        foreach(var cell in cells)
+                        {
+                            var newDiv = await devToolsContext.CreateHtmlElementAsync<HtmlDivElement>("div");
+                            await newDiv.SetInnerTextAsync("New Div Added!");
+                            await cell.AppendChildAsync(newDiv);
+                        }
+                    }
+
+                    //Get a reference to the HtmlCollection and use async enumerable
+                    //Requires Net Core 3.1 or higher
+                    var tableRowsHtmlCollection = await htmlTableElement.GetRowsAsync();
+
+                    await foreach (var row in tableRowsHtmlCollection)
+                    {
+                        var cells = await row.GetCellsAsync();
+                        await foreach (var cell in cells)
+                        {
+                            var newDiv = await devToolsContext.CreateHtmlElementAsync<HtmlDivElement>("div");
+                            await newDiv.SetInnerTextAsync("New Div Added!");
+                            await cell.AppendChildAsync(newDiv);
+                        }
                     }
                 }
             };            
