@@ -1,5 +1,9 @@
 # WebView2 DevTools DOM
 
+[![Nuget](https://img.shields.io/nuget/v/WebView2.DevTools.Dom?style=for-the-badge)](https://www.nuget.org/packages/WebView2.DevTools.Dom/)
+[![Nuget](https://img.shields.io/nuget/dt/WebView2.DevTools.Dom?style=for-the-badge)](https://www.nuget.org/packages/WebView2.DevTools.Dom/)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/amaitland?style=for-the-badge)](https://github.com/sponsors/amaitland/)
+
 WebView2 DevTools Dom is a port of [puppeteer-sharp by Darío Kondratiuk](https://github.com/hardkoded/puppeteer-sharp) that has been adapted specifically for use with WebView2.
 - Direct communication with the CoreWebView2 via the DevTools protocol (no need to open a Remote Debugging Port).
 - 1:1 mapping of WebView2DevToolsContext and CoreWebView2 (create a single WebView2DevToolsContext per CoreWebView2 instance)
