@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 
 namespace WebView2.DevTools.Dom.WinForms.Example
@@ -214,6 +216,32 @@ namespace WebView2.DevTools.Dom.WinForms.Example
             }
 
             await lastElement.ScrollIntoViewIfNeededAsync();
+
+            await devToolsContext.DisposeAsync();
+        }
+
+        private async void ViewPageSourceToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var devToolsContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
+
+            await devToolsContext.Keyboard.DownAsync("Control");
+            await devToolsContext.Keyboard.PressAsync("U");
+            await devToolsContext.Keyboard.UpAsync("Control");
+
+            await devToolsContext.DisposeAsync();
+        }
+
+        private async void OpenSourceInNotepadClick(object sender, EventArgs e)
+        {
+            var tempFile = System.IO.Path.GetTempFileName();
+
+            var devToolsContext = await _webView2.CoreWebView2.CreateDevToolsContextAsync();
+
+            var source = await devToolsContext.GetContentAsync();
+
+            System.IO.File.WriteAllText(tempFile, source);
+
+            System.Diagnostics.Process.Start("notepad.exe", tempFile);
 
             await devToolsContext.DisposeAsync();
         }

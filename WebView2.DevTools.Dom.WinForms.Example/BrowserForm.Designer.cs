@@ -40,10 +40,12 @@ namespace WebView2.DevTools.Dom.WinForms.Example
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showDevToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewPageSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devToolsExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.highlightLinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scrollLastElementIntoViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSourceInNotepad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
@@ -163,6 +165,8 @@ namespace WebView2.DevTools.Dom.WinForms.Example
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDevToolsToolStripMenuItem,
+            this.viewPageSourceToolStripMenuItem,
+            this.openSourceInNotepad,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -171,14 +175,21 @@ namespace WebView2.DevTools.Dom.WinForms.Example
             // showDevToolsToolStripMenuItem
             // 
             this.showDevToolsToolStripMenuItem.Name = "showDevToolsToolStripMenuItem";
-            this.showDevToolsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.showDevToolsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.showDevToolsToolStripMenuItem.Text = "Show DevTools";
             this.showDevToolsToolStripMenuItem.Click += new System.EventHandler(this.ShowDevToolsMenuItemClick);
+            // 
+            // viewPageSourceToolStripMenuItem
+            // 
+            this.viewPageSourceToolStripMenuItem.Name = "viewPageSourceToolStripMenuItem";
+            this.viewPageSourceToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.viewPageSourceToolStripMenuItem.Text = "View Page Source";
+            this.viewPageSourceToolStripMenuItem.Click += new System.EventHandler(this.ViewPageSourceToolStripMenuItemClick);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitMenuItemClick);
             // 
@@ -204,6 +215,13 @@ namespace WebView2.DevTools.Dom.WinForms.Example
             this.scrollLastElementIntoViewToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.scrollLastElementIntoViewToolStripMenuItem.Text = "Scroll Last Element Into View";
             this.scrollLastElementIntoViewToolStripMenuItem.Click += new System.EventHandler(this.ScrollLastElementIntoViewToolStripMenuItemClick);
+            // 
+            // openSourceInNotepad
+            // 
+            this.openSourceInNotepad.Name = "openSourceInNotepad";
+            this.openSourceInNotepad.Size = new System.Drawing.Size(200, 22);
+            this.openSourceInNotepad.Text = "View Source in Notepad";
+            this.openSourceInNotepad.Click += new System.EventHandler(this.OpenSourceInNotepadClick);
             // 
             // BrowserForm
             // 
@@ -249,5 +267,7 @@ namespace WebView2.DevTools.Dom.WinForms.Example
         private System.Windows.Forms.ToolStripMenuItem devToolsExampleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem highlightLinksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scrollLastElementIntoViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewPageSourceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openSourceInNotepad;
     }
 }
