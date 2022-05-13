@@ -30,7 +30,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
 
             // Step 2: Add div and position it absolutely inside frame.
             var frame = DevToolsContext.FirstChildFrame();
-            var divHandle = (HtmlElement)await frame.EvaluateFunctionHandleAsync(@"() => {
+            var divHandle = await frame.EvaluateFunctionHandleAsync<HtmlElement>(@"() => {
               const div = document.createElement('div');
               document.body.appendChild(div);
               div.style = `
@@ -77,7 +77,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldReturnNullForInvisibleElements()
         {
             await DevToolsContext.SetContentAsync("<div style='display:none'>hi</div>");
-            var elementHandle = await DevToolsContext.QuerySelectorAsync("div");
+            var elementHandle = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>("div");
             Assert.Null(await elementHandle.BoxModelAsync());
         }
     }

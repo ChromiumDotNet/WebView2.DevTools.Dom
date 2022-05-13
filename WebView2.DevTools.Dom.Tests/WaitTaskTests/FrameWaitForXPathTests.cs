@@ -77,8 +77,9 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
         public async Task ShouldAllowYouToSelectATextNode()
         {
             await DevToolsContext.SetContentAsync("<div>some text</div>");
-            var text = await DevToolsContext.WaitForXPathAsync("//div/text()");
-            Assert.Equal(3 /* Node.TEXT_NODE */, await (await text.GetPropertyAsync("nodeType")).GetValueAsync<int>());
+            var text = await DevToolsContext.WaitForXPathAsync<Text>("//div/text()");
+            var actual = await text.GetNodeTypeAsync();
+            Assert.Equal(NodeType.Text, actual);
         }
 
         [WebView2ContextFact]

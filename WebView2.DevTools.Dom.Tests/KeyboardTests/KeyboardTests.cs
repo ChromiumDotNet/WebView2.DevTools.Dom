@@ -20,7 +20,7 @@ namespace WebView2.DevTools.Dom.Tests.KeyboardTests
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/textarea.html");
 
-            var textarea = await DevToolsContext.QuerySelectorAsync("textarea");
+            var textarea = await DevToolsContext.QuerySelectorAsync<HtmlTextAreaElement>("textarea");
             await textarea.TypeAsync("Type in this text!");
             Assert.Equal("Type in this text!", await DevToolsContext.EvaluateExpressionAsync<string>("result"));
         }

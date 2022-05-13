@@ -42,7 +42,7 @@ namespace WebView2.DevTools.Dom.Tests.JSHandleTests
             Assert.Equal("JavascriptHandle@array", (await DevToolsContext.EvaluateExpressionHandleAsync("[]")).ToString());
             Assert.Equal("JavascriptHandle:null", (await DevToolsContext.EvaluateExpressionHandleAsync("null")).ToString());
             Assert.Equal("JavascriptHandle@regexp", (await DevToolsContext.EvaluateExpressionHandleAsync("/foo/")).ToString());
-            Assert.Equal("HTMLBodyElement@body", (await DevToolsContext.EvaluateExpressionHandleAsync("document.body")).ToString());
+            Assert.Equal("HTMLBodyElement@body", (await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("document.body")).ToString());
             Assert.Equal("JavascriptHandle@date", (await DevToolsContext.EvaluateExpressionHandleAsync("new Date()")).ToString());
             Assert.Equal("JavascriptHandle@weakmap", (await DevToolsContext.EvaluateExpressionHandleAsync("new WeakMap()")).ToString());
             Assert.Equal("JavascriptHandle@weakset", (await DevToolsContext.EvaluateExpressionHandleAsync("new WeakSet()")).ToString());

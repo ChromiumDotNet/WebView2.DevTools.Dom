@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebView2.DevTools.Dom;
 using WebView2.DevTools.Dom.Input;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using Xunit;
@@ -45,7 +44,7 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             Assert.Equal("Clicked", await DevToolsContext.EvaluateExpressionAsync<string>("result"));
         }
 
-        [WebView2ContextFact(Skip = "See https://github.com/GoogleChrome/puppeteer/issues/4281")]
+        [WebView2ContextFact]
         public async Task ShouldClickOnASpanWithAnInlineElementInside()
         {
             await DevToolsContext.SetContentAsync($@"
@@ -290,7 +289,8 @@ namespace WebView2.DevTools.Dom.Tests.ClickTests
             await DevToolsContext.SetContentAsync("<div style=\"width:100px;height:2000px\">spacer</div>");
             await FrameUtils.AttachFrameAsync(DevToolsContext, "button-test", TestConstants.ServerUrl + "/input/button.html");
             var frame = DevToolsContext.FirstChildFrame();
-            await frame.QuerySelectorAsync("button").EvaluateFunctionAsync("button => button.style.setProperty('position', 'fixed')");
+            await frame.QuerySelectorAsync<HtmlButtonElement>("button")
+                .AndThen(x => x.EvaluateFunctionAsync("button => button.style.setProperty('position', 'fixed')"));
             await frame.ClickAsync("button");
             Assert.Equal("Clicked", await frame.EvaluateExpressionAsync<string>("window.result"));
         }

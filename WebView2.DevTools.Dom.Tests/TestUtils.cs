@@ -58,7 +58,7 @@ namespace WebView2.DevTools.Dom.Tests
 
                 try
                 {
-                    if (File.Exists(cookiesFile) && File.ReadAllText(cookiesFile).Contains(valueToCheck))
+                    if (System.IO.File.Exists(cookiesFile) && System.IO.File.ReadAllText(cookiesFile).Contains(valueToCheck))
                     {
                         return;
                     }

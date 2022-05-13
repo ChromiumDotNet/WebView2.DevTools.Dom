@@ -47,8 +47,7 @@ namespace WebView2.DevTools.Dom.Tests.WaitTaskTests
             await frame.EvaluateFunctionAsync(AddElement, "br");
             await frame.EvaluateFunctionAsync(AddElement, "div");
             var eHandle = await watchdog;
-            var property = await eHandle.GetPropertyAsync("tagName");
-            var tagName = await property.GetValueAsync<string>();
+            var tagName = await eHandle.GetTagNameAsync();
             Assert.Equal("DIV", tagName);
         }
 

@@ -146,7 +146,7 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
         public async Task ShouldSendMouseWheelEvents()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/wheel.html");
-            var elem = await DevToolsContext.QuerySelectorAsync("div");
+            var elem = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>("div");
             var boundingBoxBefore = await elem.BoundingBoxAsync();
             Assert.Equal(115, boundingBoxBefore.Width);
             Assert.Equal(115, boundingBoxBefore.Height);
@@ -193,6 +193,8 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
                 IsMobile = true
             });
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.CrossProcessUrl + "/mobile.html");
+            await WebView.CoreWebView2.WaitForRenderIdle();
+
             await DevToolsContext.EvaluateFunctionAsync(@"() => {
                 document.addEventListener('click', event => {
                     window.result = { x: event.clientX, y: event.clientY };

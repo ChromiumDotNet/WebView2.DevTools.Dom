@@ -173,7 +173,7 @@ namespace WebView2.DevTools.Dom.WinForms.Example
 
             foreach (var link in links)
             {
-                _ = await link.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
+                await link.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
             }
 
             await devToolsContext.DisposeAsync();
@@ -205,13 +205,14 @@ namespace WebView2.DevTools.Dom.WinForms.Example
 
             var body = await devToolsContext.QuerySelectorAsync("body");
 
-            var lastElement = await body.EvaluateFunctionHandleAsync<HtmlElement>("e => e.lastElementChild");
+            //var lastElement = await body.EvaluateFunctionHandleAsync<HtmlElement>("e => e.lastElementChild");
+            var lastElement = await body.GetLastElementChildAsync<HtmlElement>();
             var lastElementIsHidden = await lastElement.EvaluateFunctionAsync<bool>("e => !e.offsetParent");
 
             //We have the last element, now work out way through it's previous siblings until we find a visible one to scroll into view.
             while (lastElement.ClassName == "HTMLScriptElement" || lastElementIsHidden)
             {
-                lastElement = await lastElement.EvaluateFunctionHandleAsync<HtmlElement>("e => e.previousElementSibling");
+                lastElement = await lastElement.GetPreviousElementSiblingAsync<HtmlElement>();
                 lastElementIsHidden = await lastElement.EvaluateFunctionAsync<bool>("e => !e.offsetParent");
             }
 

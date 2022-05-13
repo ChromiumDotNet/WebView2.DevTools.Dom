@@ -33,7 +33,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 
                     // Get element by Id
                     // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
-                    var element = await devToolsContext.QuerySelectorAsync("#myElementId");
+                    var element = await devToolsContext.QuerySelectorAsync<HtmlElement>("#myElementId");
 
                     //Strongly typed element types
                     //Only a subset of element types have been added so far, use HtmlElement as a generic type for all others
@@ -53,21 +53,19 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
                     var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
 
                     //Set innerText property for the element
-                    await element.SetPropertyValueAsync("innerText", "Welcome!");
-
-                    await element.SetInnerTextAsync("Welcome 2!");
+                    await element.SetInnerTextAsync("Welcome!");
 
                     //Get innerText property for the element
                     var innerText = await element.GetInnerTextAsync();
                     //Can also be acessed via calling GetPropertyValueAsync
                     //Can use this method to get any property that isn't currently mapped
-                    innerText = await element.GetPropertyValueAsync<string>("innerText");
+                    innerText = await element.GetInnerTextAsync();
 
                     //Get all child elements
                     var childElements = await element.QuerySelectorAllAsync("div");
 
                     //Change CSS style background colour
-                    _ = await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
+                    await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
 
                     //Type text in an input field
                     await element.TypeAsync("Welcome to my Website!");
@@ -79,6 +77,10 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
 
                     //Click The element
                     await element.ClickAsync();
+
+                    // Simple way of chaining method calls together when you don't need a handle to the HtmlElement
+                    var htmlButtonElementInnerText = await devToolsContext.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId")
+                        .AndThen(x => x.GetInnerTextAsync());
 
                     //Event Handler
                     //Expose a function to javascript, functions persist across navigations

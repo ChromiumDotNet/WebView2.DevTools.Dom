@@ -17,7 +17,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/playground.html");
             await DevToolsContext.SetContentAsync("<html><body><div class=\"second\"><div class=\"inner\">A</div></div></body></html>");
-            var html = await DevToolsContext.QuerySelectorAsync("html");
+            var html = await DevToolsContext.QuerySelectorAsync<HtmlElement>("html");
             var second = await html.XPathAsync("./body/div[contains(@class, 'second')]");
             var inner = await second[0].XPathAsync("./div[contains(@class, 'inner')]");
             var content = await DevToolsContext.EvaluateFunctionAsync<string>("e => e.textContent", inner[0]);
@@ -28,7 +28,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldReturnNullForNonExistingElement()
         {
             await DevToolsContext.SetContentAsync("<html><body><div class=\"second\"><div class=\"inner\">B</div></div></body></html>");
-            var html = await DevToolsContext.QuerySelectorAsync("html");
+            var html = await DevToolsContext.QuerySelectorAsync<HtmlElement>("html");
             var second = await html.XPathAsync("/div[contains(@class, 'third')]");
             Assert.Empty(second);
         }

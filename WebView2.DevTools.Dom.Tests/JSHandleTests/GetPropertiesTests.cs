@@ -25,6 +25,45 @@ namespace WebView2.DevTools.Dom.Tests.JSHandleTests
         }
 
         [WebView2ContextFact]
+        public async Task ShouldWorkForNullableIntEmptyString()
+        {
+            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync(@"({
+              foo: 'bar',
+              prop2: ''
+            })");
+            var properties = await aHandle.GetPropertiesAsync();
+            properties.TryGetValue("prop2", out var foo);
+            Assert.NotNull(foo);
+            Assert.Null(await foo.GetValueAsync<int?>());
+        }
+
+        [WebView2ContextFact]
+        public async Task ShouldWorkForNullableInt()
+        {
+            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync(@"({
+              foo: 'bar',
+              prop2: '123'
+            })");
+            var properties = await aHandle.GetPropertiesAsync();
+            properties.TryGetValue("prop2", out var foo);
+            Assert.NotNull(foo);
+            Assert.Equal(123, await foo.GetValueAsync<int?>());
+        }
+
+        [WebView2ContextFact]
+        public async Task ShouldForIntWork()
+        {
+            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync(@"({
+              foo: 'bar',
+              prop2: '123'
+            })");
+            var properties = await aHandle.GetPropertiesAsync();
+            properties.TryGetValue("prop2", out var foo);
+            Assert.NotNull(foo);
+            Assert.Equal(123, await foo.GetValueAsync<int>());
+        }
+
+        [WebView2ContextFact]
         public async Task ShouldReturnEvenNonOwnProperties()
         {
             var aHandle = await DevToolsContext.EvaluateFunctionHandleAsync(@"() => {

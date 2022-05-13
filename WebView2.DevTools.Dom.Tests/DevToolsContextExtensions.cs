@@ -1,13 +1,79 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Core.DevToolsProtocolExtension;
 
 namespace WebView2.DevTools.Dom.Tests
 {
     public static class DevToolsContextExtensions
     {
         public static Frame FirstChildFrame(this WebView2DevToolsContext ctx) => ctx.Frames.FirstOrDefault(f => f.ParentFrame == ctx.MainFrame);
+
+        public static Task WaitForRenderIdle(this CoreWebView2 coreWebView2, int idleTime = 500)
+        {
+            var renderIdleTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            var idleTimer = new System.Timers.Timer
+            {
+                Interval = idleTime,
+                AutoReset = false
+            };
+
+            var syncContext = SynchronizationContext.Current;
+
+            var devToolsProtocolHelper = coreWebView2.GetDevToolsProtocolHelper();
+
+            EventHandler<Page.ScreencastFrameEventArgs> handler = null;
+
+            idleTimer.Elapsed += (sender, args) =>
+            {
+                idleTimer.Stop();
+                idleTimer.Dispose();
+
+                syncContext.Post((s) =>
+                {
+                    devToolsProtocolHelper.Page.ScreencastFrame -= handler;
+
+                    _ = devToolsProtocolHelper.Page.StopScreencastAsync();
+                }, null);                
+
+                renderIdleTcs.TrySetResult(true);
+            };
+
+            handler = (s, args) =>
+            {
+                _ = devToolsProtocolHelper.Page.ScreencastFrameAckAsync(args.SessionId);
+
+                idleTimer.Stop();
+                idleTimer.Start();
+            };
+
+            idleTimer.Start();
+
+            devToolsProtocolHelper.Page.ScreencastFrame += handler;
+
+            _ = devToolsProtocolHelper.Page.StartScreencastAsync();
+
+            return renderIdleTcs.Task;
+        }
+
+        /// <summary>
+        /// WebView2 needs to render before attempting to send Keyboard/Mouse clicks, this adds a delay after
+        /// setting the content to allow the page to render.
+        /// </summary>
+        /// <param name="ctx">ctx</param>
+        /// <param name="html">html</param>
+        /// <param name="delay">delay</param>
+        /// <returns>Task</returns>
+        public static async Task SetContentAsync(this WebView2DevToolsContext ctx, string html, int delay)
+        {
+            await ctx.SetContentAsync(html).ConfigureAwait(true);
+
+            await Task.Delay(delay).ConfigureAwait(true);
+        }
 
         public static Task NavigateToAsync(this CoreWebView2 coreWebView2, string url)
         {

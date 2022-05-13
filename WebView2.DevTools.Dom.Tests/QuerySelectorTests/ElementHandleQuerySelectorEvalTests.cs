@@ -39,7 +39,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         public async Task QuerySelectorShouldWork()
         {
             await DevToolsContext.SetContentAsync("<html><body><div class='tweet'><div class='like'>100</div><div class='retweets'>10</div></div></body></html>");
-            var tweet = await DevToolsContext.QuerySelectorAsync(".tweet");
+            var tweet = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>(".tweet");
             var content = await tweet.QuerySelectorAsync(".like")
                 .EvaluateFunctionAsync<string>("node => node.innerText");
             Assert.Equal("100", content);
@@ -50,7 +50,7 @@ namespace WebView2.DevTools.Dom.Tests.QuerySelectorTests
         {
             var htmlContent = "<div class='a'>not-a-child-div</div><div id='myId'><div class='a'>a-child-div</div></div>";
             await DevToolsContext.SetContentAsync(htmlContent);
-            var elementHandle = await DevToolsContext.QuerySelectorAsync("#myId");
+            var elementHandle = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>("#myId");
             var content = await elementHandle.QuerySelectorAsync(".a")
                 .EvaluateFunctionAsync<string>("node => node.innerText");
             Assert.Equal("a-child-div", content);

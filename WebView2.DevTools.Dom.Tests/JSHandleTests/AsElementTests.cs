@@ -15,25 +15,34 @@ namespace WebView2.DevTools.Dom.Tests.JSHandleTests
         [WebView2ContextFact]
         public async Task ShouldWork()
         {
-            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync("document.body");
-            var element = aHandle as HtmlElement;
+            var element = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("document.body");
+            
             Assert.NotNull(element);
         }
 
         [WebView2ContextFact]
         public async Task ShouldReturnNullForNonElements()
         {
-            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync("2");
-            var element = aHandle as HtmlElement;
-            Assert.Null(element);
+            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("2");
+
+            Assert.Null(aHandle);
+        }
+
+        [WebView2ContextFact]
+        public async Task ShouldReturnNullForNull()
+        {
+            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync<HtmlElement>("null");
+
+            Assert.Null(aHandle);
         }
 
         [WebView2ContextFact]
         public async Task ShouldReturnElementHandleForTextNodes()
         {
             await DevToolsContext.SetContentAsync("<div>ee!</div>");
-            var aHandle = await DevToolsContext.EvaluateExpressionHandleAsync("document.querySelector('div').firstChild");
-            var element = aHandle as HtmlElement;
+
+            var element = await DevToolsContext.EvaluateExpressionHandleAsync<Text>("document.querySelector('div').firstChild");
+
             Assert.NotNull(element);
             Assert.True(await DevToolsContext.EvaluateFunctionAsync<bool>("e => e.nodeType === HTMLElement.TEXT_NODE", element));
         }

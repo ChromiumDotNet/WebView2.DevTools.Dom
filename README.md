@@ -78,7 +78,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 
         // Get element by Id
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
-        var element = await devToolsContext.QuerySelectorAsync("#myElementId");
+        var element = await devToolsContext.QuerySelectorAsync<HtmlElement>("#myElementId");
 
         //Strongly typed element types
         //Only a subset of element types have been added so far, use HtmlElement as a generic type for all others
@@ -98,21 +98,19 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
         var customAttribute = await element.GetAttributeAsync<string>("data-customAttribute");
 
         //Set innerText property for the element
-        await element.SetPropertyValueAsync("innerText", "Welcome!");
-
-        await element.SetInnerTextAsync("Welcome 2!");
+        await element.SetInnerTextAsync("Welcome!");
 
         //Get innerText property for the element
         var innerText = await element.GetInnerTextAsync();
         //Can also be acessed via calling GetPropertyValueAsync
         //Can use this method to get any property that isn't currently mapped
-        innerText = await element.GetPropertyValueAsync<string>("innerText");
+        innerText = await element.GetInnerTextAsync();
 
         //Get all child elements
         var childElements = await element.QuerySelectorAllAsync("div");
 
         //Change CSS style background colour
-        _ = await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
+        await element.EvaluateFunctionAsync("e => e.style.backgroundColor = 'yellow'");
 
         //Type text in an input field
         await element.TypeAsync("Welcome to my Website!");
@@ -124,6 +122,10 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
 
         //Click The element
         await element.ClickAsync();
+
+        // Simple way of chaining method calls together when you don't need a handle to the HtmlElement
+        var htmlButtonElementInnerText = await devToolsContext.QuerySelectorAsync<HtmlButtonElement>("#myButtonElementId")
+            .AndThen(x => x.GetInnerTextAsync());
 
         //Event Handler
         //Expose a function to javascript, functions persist across navigations
@@ -184,7 +186,7 @@ coreWebView2.NavigationCompleted += async (sender, args) =>
     }
 };
 ```
-<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L142' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/WebView2.DevTools.Dom.Tests/QuerySelectorTests/DevToolsContextQuerySelectorTests.cs#L20-L144' title='Snippet source file'>snippet source</a> | <a href='#snippet-queryselector' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ## Inject HTML

@@ -8,7 +8,7 @@ namespace WebView2.DevTools.Dom.Tests
     {
         public static async Task<Frame> AttachFrameAsync(WebView2DevToolsContext ctx, string frameId, string url)
         {
-            var handle = (HtmlElement)await ctx.EvaluateFunctionHandleAsync(@" async (frameId, url) => {
+            var handle = await ctx.EvaluateFunctionHandleAsync<HtmlElement>(@" async (frameId, url) => {
               const frame = document.createElement('iframe');
               frame.src = url;
               frame.id = frameId;

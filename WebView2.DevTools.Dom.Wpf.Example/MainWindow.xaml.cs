@@ -4,14 +4,13 @@ using System.Windows;
 using System.Windows.Threading;
 using NodaTime;
 using NodaTime.Extensions;
-using WebView2.DevTools.Dom;
 
 namespace WebView2.DevTools.Dom.Wpf.Example
 {
     /// <summary>
     /// WebView2 DevTools Context Example Main Window
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         public MainWindow()
         {
@@ -54,7 +53,7 @@ namespace WebView2.DevTools.Dom.Wpf.Example
                 _ = jsAlertButton.AddEventListenerAsync("click", "jsAlertButtonClick");
                 _ = csAlertButton.AddEventListenerAsync("click", "csAlertButtonClick");
 
-                var innerText = await jsAlertButton.GetPropertyValueAsync<string>("innerText");
+                var innerText = await jsAlertButton.GetInnerTextAsync();
 
                 var currentTimeSpan = await devToolsContext.QuerySelectorAsync("#current-time");
                 var fpsSpan = await devToolsContext.QuerySelectorAsync("#fps");

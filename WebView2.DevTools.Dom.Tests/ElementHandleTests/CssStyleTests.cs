@@ -17,7 +17,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldWork()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var style = await button.GetStyleAsync();
 
@@ -28,7 +28,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldGetPriorityFalse()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var style = await button.GetStyleAsync();
 
@@ -41,7 +41,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldGetPriorityTrue()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var style = await button.GetStyleAsync();
 
@@ -58,7 +58,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldGetPropertyNameByIndex()
         {
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var style = await button.GetStyleAsync();
 
@@ -75,7 +75,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
             const string expectedValue = "1px";
 
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
 
             var style = await button.GetStyleAsync();
 

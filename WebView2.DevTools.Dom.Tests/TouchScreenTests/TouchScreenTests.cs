@@ -36,7 +36,7 @@ namespace WebView2.DevTools.Dom.Tests.TouchScreenTests
 
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/touches.html");
 
-            var button = await DevToolsContext.QuerySelectorAsync("button");
+            var button = await DevToolsContext.QuerySelectorAsync<HtmlButtonElement>("button");
             await button.TapAsync();
 
             var actual = await DevToolsContext.EvaluateExpressionAsync<string[]>("getResult()");

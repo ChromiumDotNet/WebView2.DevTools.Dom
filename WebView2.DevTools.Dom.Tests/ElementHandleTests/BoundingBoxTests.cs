@@ -23,7 +23,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
                 Height = 500
             });
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/grid.html");
-            var elementHandle = await DevToolsContext.QuerySelectorAsync(".box:nth-of-type(13)");
+            var elementHandle = await DevToolsContext.QuerySelectorAsync<HtmlElement>(".box:nth-of-type(13)");
             var box = await elementHandle.BoundingBoxAsync();
             Assert.Equal(new BoundingBox(100, 50, 50, 50), box);
         }
@@ -39,7 +39,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/frames/nested-frames.html");
             var childFrame = DevToolsContext.Frames.First(f => f.Url.Contains("two-frames.html"));
             var nestedFrame = childFrame.ChildFrames.Last();
-            var elementHandle = await nestedFrame.QuerySelectorAsync("div");
+            var elementHandle = await nestedFrame.QuerySelectorAsync<HtmlElement>("div");
             var box = await elementHandle.BoundingBoxAsync();
 
             Assert.Equal(new BoundingBox(28, 182, 264, 18), box);
@@ -49,7 +49,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         public async Task ShouldReturnNullForInvisibleElements()
         {
             await DevToolsContext.SetContentAsync("<div style='display:none'>hi</div>");
-            var elementHandle = await DevToolsContext.QuerySelectorAsync("div");
+            var elementHandle = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>("div");
             Assert.Null(await elementHandle.BoundingBoxAsync());
         }
 
@@ -58,7 +58,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
         {
             await DevToolsContext.SetViewportAsync(new ViewPortOptions { Width = 500, Height = 500 });
             await DevToolsContext.SetContentAsync("<div style='width: 100px; height: 100px'>hello</div>");
-            var elementHandle = await DevToolsContext.QuerySelectorAsync("div");
+            var elementHandle = await DevToolsContext.QuerySelectorAsync<HtmlDivElement>("div");
             await DevToolsContext.EvaluateFunctionAsync("element => element.style.height = '200px'", elementHandle);
             var box = await elementHandle.BoundingBoxAsync();
             Assert.Equal(new BoundingBox(8, 8, 100, 200), box);
@@ -73,7 +73,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
                 </svg>
             ");
 
-            var element = await DevToolsContext.QuerySelectorAsync("#therect");
+            var element = await DevToolsContext.QuerySelectorAsync<HtmlElement>("#therect");
             var pptrBoundingBox = await element.BoundingBoxAsync();
             var webBoundingBox = await DevToolsContext.EvaluateFunctionAsync<BoundingBox>(@"e =>
             {

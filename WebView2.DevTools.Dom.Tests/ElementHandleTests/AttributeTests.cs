@@ -18,7 +18,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
             const string expected = "checkbox";
 
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
-            var checkbox = await DevToolsContext.QuerySelectorAsync("#agree");
+            var checkbox = await DevToolsContext.QuerySelectorAsync<HtmlInputElement>("#agree");
             var actual = await checkbox.GetAttributeAsync<string>("type");
 
             Assert.Equal(expected, actual);
@@ -30,7 +30,7 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
             const int expected = 1676;
 
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/checkbox.html");
-            var checkbox = await DevToolsContext.QuerySelectorAsync("#agree");
+            var checkbox = await DevToolsContext.QuerySelectorAsync<HtmlInputElement>("#agree");
             await checkbox.SetAttributeAsync("data-custom", expected);
 
             var actual = await checkbox.GetAttributeAsync<int>("data-custom");

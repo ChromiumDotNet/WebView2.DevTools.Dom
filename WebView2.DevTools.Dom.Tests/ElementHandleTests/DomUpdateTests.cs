@@ -21,13 +21,13 @@ namespace WebView2.DevTools.Dom.Tests.ElementHandleTests
             await WebView.CoreWebView2.NavigateToAsync(TestConstants.ServerUrl + "/input/button.html");
             var button = await DevToolsContext.QuerySelectorAsync("button");
 
-            var before = await button.GetPropertyValueAsync<string>("textContent");
+            var before = await button.GetTextContentAsync();
 
             Assert.Equal("Click target", before);
 
-            await button.SetPropertyValueAsync("textContent", expected);
+            await button.SetTextContentAsync(expected);
 
-            var actual = await button.GetPropertyValueAsync<string>("textContent");
+            var actual = await button.GetTextContentAsync();
 
             Assert.Equal(expected, actual);
         }
