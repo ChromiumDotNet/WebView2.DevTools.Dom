@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<RuntimeIdentifier>$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifier>
-		<SelfContained Condition="'$(SelfContained)' == ''">false</SelfContained>
+        <TargetFrameworks>netcoreapp3.1;net5.0-windows</TargetFrameworks>
 		<IsTestProject>true</IsTestProject>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<AssemblyName>WebView2.DevTools.Dom.Tests</AssemblyName>
 		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>Latest</LangVersion>
