@@ -273,7 +273,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
         [WebView2ContextFact()]
         public async Task ShouldThrowIfElementHandlesAreFromOtherFrames()
         {
-            const string expected = "RemoteObjects can be evaluated only in the context they were created!";
+            const string expected = "RemoteHandles can be evaluated only in the context they were created!";
 
             await FrameUtils.AttachFrameAsync(DevToolsContext, "frame1", TestConstants.EmptyPage);
             var bodyHandle = await DevToolsContext.FirstChildFrame().QuerySelectorAsync("body");
