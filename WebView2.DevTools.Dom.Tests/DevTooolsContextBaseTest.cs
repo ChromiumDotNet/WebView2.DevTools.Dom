@@ -64,7 +64,7 @@ namespace WebView2.DevTools.Dom.Tests
             {
                 if (e.IsSuccess)
                 {
-                    _appFunc = DevToolsContextFixture.AppFunc; ;
+                    _appFunc = DevToolsContextFixture.AppFunc;
                     WebView.CoreWebView2.WebResourceRequested += WebViewWebResourceRequestedAsync;
                     WebView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
                 }
@@ -136,9 +136,9 @@ namespace WebView2.DevTools.Dom.Tests
 
         protected Task WaitForError()
         {
-            var wrapper = new TaskCompletionSource<bool>(TaskContinuationOptions.RunContinuationsAsynchronously);
+            var wrapper = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            void errorEvent(object sender, WebView2.DevTools.Dom.ErrorEventArgs e)
+            void errorEvent(object sender, ErrorEventArgs e)
             {
                 wrapper.TrySetResult(true);
                 DevToolsContext.Error -= errorEvent;

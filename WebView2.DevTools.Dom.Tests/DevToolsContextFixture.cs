@@ -58,7 +58,7 @@ namespace WebView2.DevTools.Dom.Tests
                     logging.AddConsole();
                 });
 
-                var folder = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\TestServer"));
+                var folder = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\TestServer"));
 
                 _host = builder
                     .UseStartup<AspNetStartup>()
