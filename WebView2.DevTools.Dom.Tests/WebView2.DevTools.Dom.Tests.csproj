@@ -8,10 +8,10 @@
 		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.1" />
+		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.2" />
 		<PackageReference Include="MarkdownSnippets.MsBuild" Version="24.3.0" PrivateAssets="All" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="WebView2.DevTools.Dom" Version="3.0.0-beta01" />
+		<PackageReference Include="WebView2.DevTools.Dom" Version="3.0.0" />
 		<PackageReference Include="xunit" Version="2.4.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />

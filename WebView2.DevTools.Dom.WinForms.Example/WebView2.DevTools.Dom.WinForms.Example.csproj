@@ -9,6 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />
-    <PackageReference Include="WebView2.DevTools.Dom" Version="3.0.0-beta" />
+    <PackageReference Include="WebView2.DevTools.Dom" Version="3.0.0" />
   </ItemGroup>
 </Project>
