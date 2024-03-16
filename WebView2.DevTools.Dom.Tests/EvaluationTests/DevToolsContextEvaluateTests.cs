@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using System.Numerics;
 using WebView2.DevTools.Dom.Tests.Attributes;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
 {
@@ -416,7 +417,7 @@ namespace WebView2.DevTools.Dom.Tests.DevToolsContextTests
 
             return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 PropertyNameCaseInsensitive = true
             });
         }
