@@ -127,7 +127,7 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
                 await DevToolsContext.ClickAsync("#button-3");
                 if (!(await DevToolsContext.EvaluateFunctionAsync<bool>("mod => window.lastEvent[mod]", modifier.Value)))
                 {
-                    Assert.True(false, $"{modifier.Value} should be true");
+                    Assert.Fail($"{modifier.Value} should be true");
                 }
 
                 await DevToolsContext.Keyboard.UpAsync(modifier.Key);
@@ -137,7 +137,7 @@ namespace WebView2.DevTools.Dom.Tests.MouseTests
             {
                 if (await DevToolsContext.EvaluateFunctionAsync<bool>("mod => window.lastEvent[mod]", modifier.Value))
                 {
-                    Assert.False(true, $"{modifiers.Values} should be false");
+                    Assert.Fail($"{modifiers.Values} should be false");
                 }
             }
         }
