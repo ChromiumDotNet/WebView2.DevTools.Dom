@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;net6.0-windows</TargetFrameworks>
 		<IsTestProject>true</IsTestProject>
 		<AssemblyName>WebView2.DevTools.Dom.Tests</AssemblyName>
 		<UseWindowsForms>true</UseWindowsForms>
@@ -9,12 +9,12 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.2" />
-		<PackageReference Include="MarkdownSnippets.MsBuild" Version="24.3.0" PrivateAssets="All" />
+		<PackageReference Include="MarkdownSnippets.MsBuild" Version="26.0.1" PrivateAssets="All" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="WebView2.DevTools.Dom" Version="3.0.1" />
 		<PackageReference Include="xunit" Version="2.4.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2365.46" />
 		<PackageReference Include="Xunit.StaFact" Version="1.1.11" />
 	</ItemGroup>
 	<ItemGroup>
