@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
+    <Version>5.0.0</Version>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <CodeAnalysisRuleSet>../WebView2.DevTools.Dom.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>WebView2.DevTools.Dom</AssemblyName>
+    <RootNamespace>WebView2.DevTools.Dom</RootNamespace>
+    <EmbedAllSources>true</EmbedAllSources>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild> <!-- Must manually package after obfuscation has completed -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\WebView2.DevTools.Dom.snk</AssemblyOriginatorKeyFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+
+    <!-- https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec-file -->
+    <NuspecFile>..\Nuget\WebView2.DevTools.Dom.nuspec</NuspecFile>
+    <NuspecProperties>Version=$(Version)</NuspecProperties>
+    <NuspecBasePath>..\Nuget\</NuspecBasePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Web.WebView2.DevToolsProtocolExtension" Version="1.0.2901" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: |
+        dotnet build src\WebView2.DevTools.Dom.sln --no-restore --configuration Release
+        dotnet pack  src\WebView2.DevTools.Dom\WebView2.DevTools.Dom.csproj --no-build --configuration Release
+
+# Disable Test Run until I can workout how to install WebView2 Runtime (not clear that it will run on GitHub Actions either).
+# Possibly used a fixed runtime
+#    - name: Test
+#      run: dotnet test -f net5.0-windows -s WebView2.DevTools.Dom.Tests\test.runsettings --no-build --verbosity normal
+
+    - name: Publish Nuget to GitHub
+      run: |
+        dotnet nuget push src\WebView2.DevTools.Dom\bin\Release\*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ChromiumDotNet/index.json
+        dotnet nuget push src\WebView2.DevTools.Dom\bin\Release\*.nupkg -k ${{ secrets.MyGetToken }} -s https://www.myget.org/F/cefsharp/api/v3/index.json

@@ -1,0 +1,1 @@
+dotnet pack ..\src\WebView2.DevTools.Dom\WebView2.DevTools.Dom.csproj --no-build --configuration Release

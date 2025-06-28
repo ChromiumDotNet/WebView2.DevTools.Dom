@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebView2.DevTools.Dom", "WebView2.DevTools.Dom\WebView2.DevTools.Dom.csproj", "{19B9B1ED-AF6C-4DAF-8B73-401570111F88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebView2.DevTools.Dom.Tests", "WebView2.DevTools.Dom.Tests\WebView2.DevTools.Dom.Tests.csproj", "{1682289E-5ED3-405F-8ABC-01A3ED58CBC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5993B99D-AC7B-4D6F-832C-6784D7EFE9B3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		mdsnippets.json = mdsnippets.json
+		WebView2.DevTools.Dom.ruleset = WebView2.DevTools.Dom.ruleset
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebView2.DevTools.Dom.Wpf.Example", "WebView2.DevTools.Dom.Wpf.Example\WebView2.DevTools.Dom.Wpf.Example.csproj", "{FB9696D3-9D82-4A01-A702-E0627B4D1422}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebView2.DevTools.Dom.WinForms.Example", "WebView2.DevTools.Dom.WinForms.Example\WebView2.DevTools.Dom.WinForms.Example.csproj", "{ADF0DE56-4F86-4501-823B-8B14E70B3B0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19B9B1ED-AF6C-4DAF-8B73-401570111F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B9B1ED-AF6C-4DAF-8B73-401570111F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B9B1ED-AF6C-4DAF-8B73-401570111F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B9B1ED-AF6C-4DAF-8B73-401570111F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1682289E-5ED3-405F-8ABC-01A3ED58CBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1682289E-5ED3-405F-8ABC-01A3ED58CBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1682289E-5ED3-405F-8ABC-01A3ED58CBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1682289E-5ED3-405F-8ABC-01A3ED58CBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB9696D3-9D82-4A01-A702-E0627B4D1422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB9696D3-9D82-4A01-A702-E0627B4D1422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB9696D3-9D82-4A01-A702-E0627B4D1422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB9696D3-9D82-4A01-A702-E0627B4D1422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF0DE56-4F86-4501-823B-8B14E70B3B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF0DE56-4F86-4501-823B-8B14E70B3B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF0DE56-4F86-4501-823B-8B14E70B3B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF0DE56-4F86-4501-823B-8B14E70B3B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9F7978B-89C0-4A54-8D80-A1E93E401D4C}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+	EndGlobalSection
+EndGlobal

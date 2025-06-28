@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>WebView2.DevTools.Dom</id>
+    <title>WebView2 DevTools Dom</title>
+    <version>$version$</version>
+    <authors>Alex Maitland</authors>
+    <owners>amaitland</owners>
+    <projectUrl>https://github.com/ChromiumDotNet/WebView2.DevTools.Dom</projectUrl>
+    <license type="file">LICENSE</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <repository type="git" url="https://github.com/ChromiumDotNet/WebView2.DevTools.Dom.Source.git" />
+    <description>
+      WebView2.DevTools.Dom - Extension WebView2 providing strongly typed DOM access/modification.
+
+      ✔️ WebView2.DevTools.Dom is a library for strongly typed DOM access when using WebView2.
+      ✔️ It provides a convenient way to write readable/robust/refactorable DOM access code.
+      ✔️ Chrome DevTools Protocol based API
+      ✔️ Talks directly to the WebView2 browser (no remote debugging port required).
+      ✔️ Extensive Unit Tests
+      ✔️ Free for everyone to use
+
+      <![CDATA[
+        // Add using WebView2.DevTools.Dom; to get access to the CreateDevToolsContextAsync extension method
+        var devToolsContext = await coreWebView2.CreateDevToolsContextAsync();
+        
+        // Get element by Id
+        // https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+        var htmlDivElement = await devToolsContext.QuerySelectorAsync<HtmlDivElement>("#myDivElementId");
+
+        //Set innerText property for the element
+        await htmlDivElement.SetInnerTextAsync("Welcome!");
+
+        // Manually dispose of context (only DisposeAsync is supported as the whole API is async)
+        // alternativly use await using var devToolsContext = await coreWebView2.CreateDevToolsContextAsync();
+        // if your .Net version supports it.
+        await devToolsContext.DisposeAsync();
+        ]]>
+
+      Website: https://github.com/ChromiumDotNet/WebView2.DevTools.Dom
+    </description>
+    <tags>webview2 webview devtools dom automation</tags>
+    <copyright>Copyright © Alex Maitland</copyright>
+    <readme>docs\README.md</readme>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="6.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging" version="2.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Web.WebView2.DevToolsProtocolExtension" version="1.0.2901" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Microsoft.Extensions.Logging" version="2.1.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Web.WebView2.DevToolsProtocolExtension" version="1.0.2901" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <releaseNotes>
+    <![CDATA[
+     Fix CssStyleDeclaration.GetPropertyValueAsync<T> return type (https://github.com/ChromiumDotNet/WebView2.DevTools.Dom/issues/9)
+    ]]>
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="..\src\WebView2.DevTools.Dom\bin\Release\net462\obfuscated\WebView2.DevTools.Dom.dll" target="lib\net462" />
+    <file src="..\src\WebView2.DevTools.Dom\bin\Release\net462\WebView2.DevTools.Dom.xml" target="lib\net462" />
+  
+    <file src="..\src\WebView2.DevTools.Dom\bin\Release\netcoreapp3.1\obfuscated\WebView2.DevTools.Dom.dll" target="lib\netcoreapp3.1" />
+    <file src="..\src\WebView2.DevTools.Dom\bin\Release\netcoreapp3.1\WebView2.DevTools.Dom.xml" target="lib\netcoreapp3.1" />
+
+    <file src="Readme.txt" target="" />
+    <file src="..\README.md" target="docs\" />
+    <file src="..\LICENSE" target="LICENSE" />
+  </files>
+</package>

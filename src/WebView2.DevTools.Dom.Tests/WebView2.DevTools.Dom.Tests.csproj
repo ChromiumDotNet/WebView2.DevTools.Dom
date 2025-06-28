@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+    <TargetFrameworks>net6.0-windows</TargetFrameworks>
+		<IsTestProject>true</IsTestProject>
+		<AssemblyName>WebView2.DevTools.Dom.Tests</AssemblyName>
+		<UseWindowsForms>true</UseWindowsForms>
+		<LangVersion>Latest</LangVersion>
+		<SignAssembly>false</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\WebView2.DevTools.Dom.snk</AssemblyOriginatorKeyFile>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="InputTests\FileChooserAcceptTests.cs" />
+		<Compile Remove="InputTests\FileChooserCancelTests.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Chromium.AspNetCore.Bridge" Version="1.0.2" />
+		<PackageReference Include="MarkdownSnippets.MsBuild" Version="26.0.1" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="xunit" Version="2.6.6" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
+		<PackageReference Include="Xunit.StaFact" Version="1.1.11" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\WebView2.DevTools.Dom\WebView2.DevTools.Dom.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Assets\es6\es6import.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6module.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\es6\es6pathimport.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\file-to-upload.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedfile.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\injectedstyle.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.css">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\one-style.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="test.runsettings">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="xunit.runner.json" />
+		<Content Include="xunit.runner.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>
